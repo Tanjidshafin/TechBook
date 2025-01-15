@@ -1,9 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AwesomeButton } from "react-awesome-button";
 import 'react-awesome-button/dist/styles.css';
 import { NavLink } from 'react-router';
-
+import { AppContext } from '../context/AppContext';
+import { FiUser } from "react-icons/fi";
+import { MdDashboard } from "react-icons/md";
+import { CiNoWaitingSign } from "react-icons/ci";
+import { TbLogout2 } from "react-icons/tb";
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase.init';
 const Navbar = () => {
+    const { user } = useContext(AppContext)
+    const [accountMenuOpen, setAccountMenuOpen] = useState(false)
+    //logout
+    const handleLogout = () => {
+        signOut(auth)
+            .then(res => console.log("Log out successful"))
+    }
+    //dark mode
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedMode = localStorage.getItem('darkMode');
         return savedMode === 'true';
@@ -67,12 +81,12 @@ const Navbar = () => {
                         </li>
 
 
-                        <li><NavLink to="/products" className={({ isActive }) =>
-                            `before:w-0 hover:before:w-full ${isActive ? "before:w-full" : ""} 
+                        <li><NavLink to="/products" className={({ isActive }) => `before:w-0 hover:before:w-full ${isActive ? "before:w-full" : ""} 
       before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 
       before:absolute relative before:rounded-full before:bottom-[-2px] 
       hover:text-[#3B9DF8] transition-all duration-300 before:left-0 
       cursor-pointer capitalize`
+
                         }>Products</NavLink></li>
                     </ul>
                 </div>
@@ -86,12 +100,46 @@ const Navbar = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
                         </svg>
-
                     </AwesomeButton>
+                    {user ? (<div className="flex items-center gap-[15px]">
+                        <div className="flex items-center gap-[10px] cursor-pointer relative"
+                            onClick={() => setAccountMenuOpen(!accountMenuOpen)}>
+                            <div className="relative w-9">
+                                <img
+                                    src="https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?t=st=1724605498~exp=1724609098~hmac=7f6fc106bae2c17b0c93af1b2e5483d9d8368f3e51284aaec7c7d50590d2bae5&w=740"
+                                    alt="avatar" className="w-[35px] h-[35px] rounded-full object-cover" />
+                                <div
+                                    className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
+                            </div>
 
-                    <NavLink to="/login">
+                            <div
+                                className={`${accountMenuOpen ? "translate-y-0 opacity-100 z-[1]" : "translate-y-[10px] opacity-0 z-[-1]"} bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
+                                <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                                    <FiUser />
+                                    {user.displayName}
+                                </p>
+                                <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                                    <MdDashboard />
+                                    Dashboard
+                                </p>
+                                <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                                    <CiNoWaitingSign />
+                                    Status
+                                </p>
+                                <div className="mt-3 border-t border-gray-200 pt-[5px]">
+                                    <button onClick={handleLogout} className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
+                                        <TbLogout2 />
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>) : (<NavLink to="/login">
                         <AwesomeButton type="primary">Login</AwesomeButton>
-                    </NavLink>
+                    </NavLink>)}
+
                 </div>
             </div>
         </div>

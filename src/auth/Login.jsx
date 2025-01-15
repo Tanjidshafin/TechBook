@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import loginImage from "../assets/LoginImage.json"
 import Lottie from 'lottie-react'
-import { NavLink } from 'react-router'
+import { NavLink, useLocation, useNavigate } from 'react-router'
+import { AppContext } from '../context/AppContext'
 export default function Login() {
+    const { googleSignIn } = useContext(AppContext)
+    const [loading, setLoading] = useState(false)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location?.state || "/"
+
+    const handleGoogleSignIn = () => {
+        try {
+            setLoading(true)
+            googleSignIn()
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+            navigate(from)
+        }
+    }
     return (
         <div className="min-h-screen flex items-center justify-center dark:bg-gray-800 bg-white p-4">
             <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -55,8 +73,8 @@ export default function Login() {
                                 <span className="px-2 bg-white dark:bg-gray-700 dark:text-gray-400 text-gray-500">Or continue</span>
                             </div>
                         </div>
-                        <button className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                            <svg className="w-5 h-5" viewBox="0 0 24 24">
+                        <button onClick={handleGoogleSignIn} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                            {loading ? (<span className="loading loading-spinner loading-md"></span>) : (<svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
                                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                                     fill="#4285F4"
@@ -73,7 +91,8 @@ export default function Login() {
                                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                                     fill="#EA4335"
                                 />
-                            </svg>
+                            </svg>)}
+
                             Log in with Google
                         </button>
                         <p className="text-center text-gray-500">
