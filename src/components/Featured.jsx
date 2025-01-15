@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PageStarter from '../hooks/PageStarter'
 import UseProducts from '../hooks/UseProducts'
 import { AwesomeButton } from "react-awesome-button";
 import { NavLink } from 'react-router';
+import Swal from 'sweetalert2';
+import AxiosPublic from '../context/AxiosPublic';
 const Featured = () => {
-    const [products] = UseProducts();
+    const AxiosLink = AxiosPublic()
+    const [loading, setLoading] = useState(false)
+    const [products, productRefetched] = UseProducts();
+    //filtered & sorted based timestamp
     const FeaturedProducts = products
         .filter(product => product?.speciality === "featured")
         .sort((a, b) => {
@@ -22,6 +27,25 @@ const Featured = () => {
             hours = 0;
         }
         return hours * 3600 + minutes * 60 + seconds;
+    }
+    //upvote incrementation
+    const handleUpvote = async (id, name) => {
+        try {
+            setLoading(true)
+            await AxiosLink.patch(`product/${id}`)
+                .then(res => {
+                    Swal.fire({
+                        title: "Upvoted",
+                        text: `You have upvoted ${name}`,
+                        icon: "success"
+                    });
+                })
+            productRefetched()
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
     }
     return (
         <div className='mt-20 px-4 sm:px-6 lg:px-8'>
@@ -53,7 +77,7 @@ const Featured = () => {
                                         </span>))}
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <button
+                                        <button onClick={() => handleUpvote(product._id, product.name)}
 
                                             className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
                                         >

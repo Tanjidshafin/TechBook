@@ -1,18 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PageStarter from '../hooks/PageStarter'
 import UseProductsTrending from '../hooks/UseProductsTrending'
 import { NavLink } from 'react-router'
 import { AwesomeButton } from 'react-awesome-button'
+import AxiosPublic from '../context/AxiosPublic'
+import Swal from 'sweetalert2'
+import UseProducts from '../hooks/UseProducts'
 const Trending = () => {
-    const [Trendingproducts] = UseProductsTrending()
-
+    const [Trendingproducts, refetch] = UseProductsTrending()
+    const AxiosLink = AxiosPublic()
+    const [loading, setLoading] = useState(false)
+    //upvote incrementation
+    const handleUpvote = async (id, name) => {
+        try {
+            setLoading(true)
+            await AxiosLink.patch(`product/${id}`)
+                .then(res => {
+                    Swal.fire({
+                        title: "Upvoted",
+                        text: `You have upvoted ${name}`,
+                        icon: "success"
+                    });
+                })
+            refetch()
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className='mt-20 px-4 sm:px-6 lg:px-8'>
             <PageStarter title="Trending Products" subTitle="Discover top-rated tech innovations in our Featured Products section. Explore cutting-edge tools, software, and apps handpicked for you." />
             <div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
-                    Trendingproducts.reverse().map(product => (
+                    Trendingproducts.map(product => (
                         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
                             <div className="relative">
                                 <img
@@ -37,7 +60,7 @@ const Trending = () => {
                                         </span>))}
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <button
+                                        <button onClick={() => handleUpvote(product._id, product.name)}
 
                                             className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
                                         >
