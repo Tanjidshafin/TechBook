@@ -1,20 +1,35 @@
 import React from 'react'
 import PageStarter from '../hooks/PageStarter'
 import UseProducts from '../hooks/UseProducts'
+import { AwesomeButton } from "react-awesome-button";
+import { NavLink } from 'react-router';
 const Featured = () => {
-    const [products] = UseProducts()
-    if (products === undefined) {
-        return <div>Not Getting Products</div>
+    const [products] = UseProducts();
+    const FeaturedProducts = products
+        .filter(product => product?.speciality === "featured")
+        .sort((a, b) => {
+            const timeA = parseTime(a.time);
+            const timeB = parseTime(b.time);
+            return timeA - timeB;
+        });
+    function parseTime(timeStr) {
+        if (!timeStr) return 0;
+        const [time, modifier] = timeStr.split(" ");
+        let [hours, minutes, seconds] = time.split(".").map(Number);
+        if (modifier === "PM" && hours !== 12) {
+            hours += 12;
+        } else if (modifier === "AM" && hours === 12) {
+            hours = 0;
+        }
+        return hours * 3600 + minutes * 60 + seconds;
     }
-    const FeaturedProducts = products.filter(product => product?.speciality === "featured")
- 
     return (
-        <div className='mt-20'>
+        <div className='mt-20 px-4 sm:px-6 lg:px-8'>
             <PageStarter title="Featured Products" subTitle="Discover top-rated tech innovations in our Featured Products section. Explore cutting-edge tools, software, and apps handpicked for you." />
             <div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
-                    FeaturedProducts.reverse().map(product => (
-                        <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
+                    FeaturedProducts.map(product => (
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
                             <div className="relative">
                                 <img
                                     src={product.image}
@@ -26,8 +41,8 @@ const Featured = () => {
                                 </div>
                             </div>
                             <div className="p-4">
-                                <h2 className="text-xl font-bold text-indigo-900 mb-2 truncate">{product.name}</h2>
-                                <p className="text-gray-600 text-sm mb-4 line-clamp-2">description</p>
+                                <p className="text-gray-400 text-sm mb-2 line-clamp-2">Posted on: {product.time}</p>
+                                <h2 className="text-xl font-bold text-indigo-700 mb-2 truncate">{product.name}</h2>
                                 <div className='flex flex-col justify-between'>
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {product.tags.map(tag => (<span
@@ -54,6 +69,9 @@ const Featured = () => {
                     ))
                 }
             </div>
+            <NavLink className="flex justify-center md:justify-end mt-5">
+                <AwesomeButton type="secondary">All Products</AwesomeButton>
+            </NavLink>
         </div>
     )
 }

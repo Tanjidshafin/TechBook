@@ -1,18 +1,19 @@
 import React from 'react'
 import PageStarter from '../hooks/PageStarter'
 import UseProductsTrending from '../hooks/UseProductsTrending'
+import { NavLink } from 'react-router'
+import { AwesomeButton } from 'react-awesome-button'
 const Trending = () => {
     const [Trendingproducts] = UseProductsTrending()
-    const date = new Date()
-    console.log(date.toLocaleTimeString());
+
 
     return (
-        <div className='mt-20'>
+        <div className='mt-20 px-4 sm:px-6 lg:px-8'>
             <PageStarter title="Trending Products" subTitle="Discover top-rated tech innovations in our Featured Products section. Explore cutting-edge tools, software, and apps handpicked for you." />
             <div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
                     Trendingproducts.reverse().map(product => (
-                        <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
                             <div className="relative">
                                 <img
                                     src={product.image}
@@ -24,8 +25,8 @@ const Trending = () => {
                                 </div>
                             </div>
                             <div className="p-4">
-                                <h2 className="text-xl font-bold text-indigo-900 mb-2 truncate">{product.name}</h2>
-                                <p className="text-gray-600 text-sm mb-4 line-clamp-2">description</p>
+                                <h2 className="text-xl font-bold text-indigo-600 mb-2 truncate">{product.name}</h2>
+                                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
                                 <div className='flex flex-col justify-between'>
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {product.tags.map(tag => (<span
@@ -52,6 +53,9 @@ const Trending = () => {
                     ))
                 }
             </div>
+            <NavLink className="flex justify-center md:justify-end mt-5">
+                <AwesomeButton type="secondary">All Products</AwesomeButton>
+            </NavLink>
         </div>
     )
 }
