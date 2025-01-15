@@ -3,6 +3,7 @@ import SignupImage from "../assets/Signup.json"
 import Lottie from 'lottie-react'
 import { AppContext } from '../context/AppContext'
 import { useNavigate } from 'react-router'
+import { Helmet } from 'react-helmet-async'
 export default function Signup() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -27,6 +28,9 @@ export default function Signup() {
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 p-4">
+            <Helmet>
+                <title>TechBook | Register</title>
+            </Helmet>
             <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="w-full max-w-md space-y-8">
                     <div className="flex items-center sm:justify-start justify-center text-3xl gap-2 font-semibold">

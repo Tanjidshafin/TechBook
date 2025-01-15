@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import { AppContext } from '../context/AppContext';
+import { AwesomeButton } from 'react-awesome-button';
+import AxiosPublic from '../context/AxiosPublic';
+import { useParams } from 'react-router';
+import { IoIosAlert } from "react-icons/io";
+import { FaCaretUp } from "react-icons/fa6";
 export default function ProductDetails() {
-    const [currentImage, setCurrentImage] = useState(0)
-    const [selectedColor, setSelectedColor] = useState('black')
-    const [quantity, setQuantity] = useState(1)
+    const AxiosLink = AxiosPublic()
+    const { id } = useParams()
+    const [product, setProduct] = useState([])
+    const { user } = useContext(AppContext)
+    useEffect(() => {
+        AxiosLink.get(`/product/${id}`)
+            .then(res => setProduct(res.data))
 
-    const images = [
-        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-15%20153656-f8HpwycPm693I8GFOJO235pex75ask.png',
-        '/placeholder.svg?height=600&width=600',
-        '/placeholder.svg?height=600&width=600',
-        '/placeholder.svg?height=600&width=600'
-    ]
-
-    const colors = [
-        { name: 'Black', value: 'black' },
-        { name: 'Gray', value: 'gray-300' },
-        { name: 'Red', value: 'red-500' }
-    ]
-
+    }, [])
     const reviews = [
         {
             id: 1,
@@ -38,121 +37,56 @@ export default function ProductDetails() {
     ]
 
     return (
-        <div className="max-w-7xl min-h-screen mx-auto px-4 py-8">
-            {/* Product Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Image Gallery */}
-                <div className="space-y-4">
-                    <div className="relative aspect-square">
-                        <span className="absolute top-4 left-4 z-10 bg-black text-white px-2 py-1 text-sm">NEW</span>
-                        <span className="absolute top-4 left-16 z-10 bg-emerald-500 text-white px-2 py-1 text-sm">-50%</span>
-                        <button
-                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg"
-                            onClick={() => setCurrentImage((prev) => (prev > 0 ? prev - 1 : images.length - 1))}
-                        >
-                            ←
-                        </button>
-                        <img
-                            src={images[currentImage] || "/placeholder.svg"}
-                            alt="Product"
-                            className="w-full h-full object-cover rounded-lg"
-                        />
-                        <button
-                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-lg"
-                            onClick={() => setCurrentImage((prev) => (prev < images.length - 1 ? prev + 1 : 0))}
-                        >
-                            →
-                        </button>
-                    </div>
-                    <div className="flex gap-2 overflow-auto pb-2">
-                        {images.map((img, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => setCurrentImage(idx)}
-                                className={`flex-shrink-0 border-2 rounded-lg ${currentImage === idx ? 'border-blue-500' : 'border-transparent'
-                                    }`}
-                            >
-                                <img src={img || "/placeholder.svg"} alt={`Thumbnail ${idx + 1}`} className="w-24 h-24 object-cover rounded-lg" />
-                            </button>
-                        ))}
-                    </div>
-                </div>
+        <div className="px-4 py-8">
+            <div className="grid mt-14 grid-cols-1  md:items-start lg:items-center md:grid-cols-2 gap-8">
+                <Carousel>
+                    {product.images?.map(image => (<div className='w-full'>
+                        <img className='object-cover' src={image} />
+                    </div>))}
 
+                </Carousel>
                 {/* Product Info */}
-                <div className="space-y-6">
+                <div className="space-y-6 lg:px-20">
                     <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                            <div className="flex text-yellow-400">
-                                {'★'.repeat(5)}
-                            </div>
-                            <span className="text-gray-600">11 Reviews</span>
-                        </div>
-                        <h1 className="text-3xl font-bold">Tray Table</h1>
+                        <h1 className="text-3xl font-bold">{product.name}</h1>
                         <p className="text-gray-600">
-                            Buy one or buy a few and make every space where you sit more convenient. Light and easy to move around with removable tray top, handy for serving snacks.
+                            {product.description}
                         </p>
                     </div>
 
                     <div className="flex items-baseline gap-4">
-                        <span className="text-3xl font-bold">$199.00</span>
-                        <span className="text-gray-500 line-through">$400.00</span>
+                        <span className="text-3xl font-bold uppercase">{product.speciality}</span>
                     </div>
 
                     <div className="space-y-4">
                         <div>
-                            <h3 className="font-medium mb-2">Measurements</h3>
-                            <p>17 1/2×20 5/8"</p>
+                            <h3 className="font-medium mb-2">External Links</h3>
+                            <ul>
+                                <li>
+                                    Website: {product.externalLinks?.website ? (<a className='underline text-blue-400' href={product.externalLinks?.website} target='_blank'>{product.externalLinks?.website}</a>) : ("Not Available Now")}
+                                </li>
+                                <li>
+                                    Github: {product.externalLinks?.github ? (<a className='underline text-blue-400' href={product.externalLinks?.github} target='_blank'>{product.externalLinks?.github}</a>) : ("Not Available Now")}
+                                </li>
+                                <li>
+                                    Twitter: {product.externalLinks?.twitter ? (<a className='underline text-blue-400' href={product.externalLinks?.twitter} target='_blank'>{product.externalLinks?.twitter}</a>) : ("Not Available Now")}
+                                </li>
+                            </ul>
                         </div>
-
-                        <div>
-                            <h3 className="font-medium mb-2">Choose Color</h3>
-                            <div className="flex gap-2">
-                                {colors.map((color) => (
-                                    <button
-                                        key={color.name}
-                                        onClick={() => setSelectedColor(color.value)}
-                                        className={`w-8 h-8 rounded-full bg-${color.value} ${selectedColor === color.value ? 'ring-2 ring-offset-2 ring-blue-500' : ''
-                                            }`}
-                                    />
-                                ))}
-                            </div>
-                            <p className="mt-2 text-gray-700">{colors.find(c => c.value === selectedColor)?.name}</p>
-                        </div>
-
                         <div className="flex gap-4">
-                            <div className="flex items-center border rounded-md">
-                                <button
-                                    className="px-3 py-2 border-r"
-                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                >
-                                    -
-                                </button>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    value={quantity}
-                                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                                    className="w-16 text-center p-2"
-                                />
-                                <button
-                                    className="px-3 py-2 border-l"
-                                    onClick={() => setQuantity(q => q + 1)}
-                                >
-                                    +
-                                </button>
-                            </div>
-                            <button className="flex-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                                Add to Cart
-                            </button>
-                        </div>
+                            <AwesomeButton
+                                type="danger"
+                            >
+                                <span><IoIosAlert /></span>
+                                <span className='ml-2'>Report</span>
+                            </AwesomeButton>
+                            <AwesomeButton
+                                type="secondary"
+                            >
+                                <span><FaCaretUp /></span>
+                                <span className='ml-2'>Upvote ({product.upvoteCounts})</span>
+                            </AwesomeButton>
 
-                        <div className="flex gap-4">
-                            <button className="flex-1 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition">
-                                Report
-                            </button>
-                            <button className="flex-1 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition">
-                                Upvote (24)
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -163,62 +97,57 @@ export default function ProductDetails() {
                 <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
 
                 {/* Post Review */}
-                <div className="bg-gray-50 p-4 rounded-lg mb-8">
-                    <div className="flex items-start gap-4">
-                        <img
-                            src="/placeholder.svg?height=40&width=40"
-                            alt="User Avatar"
-                            className="w-10 h-10 rounded-full"
-                        />
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <span className="font-medium">Your Name</span>
-                            </div>
-                            <textarea
-                                placeholder="Write a comment..."
-                                className="w-full p-3 rounded-lg border min-h-[100px] focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <div className="flex justify-between items-center mt-2">
-                                <div className="flex gap-2">
-                                    {'😊 😃 📷 🎥 💝'.split(' ').map((emoji, idx) => (
-                                        <button key={idx} className="hover:bg-gray-200 p-1 rounded">
-                                            {emoji}
-                                        </button>
-                                    ))}
+                <div className='flex flex-col-reverse justify-between md:flex-row gap-5'>
+                    <div className="space-y-6 basis-1/2">
+                        {reviews.map((review) => (
+                            <div className=" relative bg-white dark:bg-gray-800 shadow-md rounded-xl flex sm:flex-row flex-col gap-[20px] p-4">
+                                <div className="">
+                                    <img
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"
+                                        alt="image"
+                                        className="w-[50px] h-[50px] object-cover rounded-full"
+                                    />
                                 </div>
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
-                                    Post Review
-                                </button>
+                                <div className="">
+                                    <div>
+                                        <h1 className="text-[1.4rem] font-bold leading-[24px]">Jhon Dee</h1>
+
+                                    </div>
+                                    <span className="text-[0.9rem] text-gray-400">UI/UX Designer</span>
+                                    <p className="text-gray-500 mt-3 pr-10 text-[0.9rem]">UI is the saddle, the stirrups, & the reins. UX is
+                                        the feeling you get being able to ride the horse.</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="bg-gray-50 w-full basis-1/2 dark:bg-gray-800 p-4 rounded-lg mb-8">
+                        <div className="flex items-start gap-4">
+                            <img
+                                src={user ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
+                                alt="User Avatar"
+                                className="w-10 h-10 rounded-full"
+                            />
+                            <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="font-medium">{user.displayName}</span>
+                                    <span className="font-medium"></span>
+                                </div>
+                                <textarea
+                                    placeholder="Write a comment..."
+                                    className="w-full resize-none p-3 rounded-lg border min-h-[100px] focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+
+                                />
+                                <div className="flex justify-end items-center mt-2">
+                                    <AwesomeButton
+                                        type="primary"
+                                    >
+                                        Post Review
+                                    </AwesomeButton>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Review List */}
-                <div className="space-y-6">
-                    {reviews.map((review) => (
-                        <div key={review.id} className="border-b pb-6">
-                            <div className="flex items-start gap-4">
-                                <img
-                                    src={review.avatar || "/placeholder.svg"}
-                                    alt={`${review.author}'s avatar`}
-                                    className="w-10 h-10 rounded-full"
-                                />
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="font-medium">{review.author}</span>
-                                        <span className="text-gray-500">•</span>
-                                        <span className="text-gray-500">{review.date}</span>
-                                    </div>
-                                    <div className="flex text-yellow-400 mb-2">
-                                        {'★'.repeat(review.rating)}
-                                        {'☆'.repeat(5 - review.rating)}
-                                    </div>
-                                    <p className="text-gray-600">{review.comment}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>

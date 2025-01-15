@@ -5,11 +5,13 @@ import { Helmet } from 'react-helmet-async'
 import Trending from '../components/Trending'
 
 const Home = () => {
-    <Helmet>
-        <title>TechBook || Home</title>
-    </Helmet>
+
     return (
+
         <div>
+            <Helmet>
+                <title>TechBook | Home</title>
+            </Helmet>
             <Banner />
             <Featured />
             <Trending />

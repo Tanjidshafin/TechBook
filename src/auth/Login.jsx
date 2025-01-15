@@ -3,6 +3,7 @@ import loginImage from "../assets/LoginImage.json"
 import Lottie from 'lottie-react'
 import { NavLink, useLocation, useNavigate } from 'react-router'
 import { AppContext } from '../context/AppContext'
+import { Helmet } from 'react-helmet-async'
 export default function Login() {
     const { googleSignIn, loginUser } = useContext(AppContext)
     const [loadingGoogle, setLoadingG] = useState(false)
@@ -39,7 +40,9 @@ export default function Login() {
         }
     }
     return (
+
         <div className="min-h-screen flex items-center justify-center dark:bg-gray-800 bg-white p-4">
+           
             <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="w-full max-w-md mx-auto space-y-8">
                     <div className="flex items-center sm:justify-start justify-center text-3xl gap-2 font-semibold">

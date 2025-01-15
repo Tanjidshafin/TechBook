@@ -16,7 +16,7 @@ const Trending = () => {
                         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
                             <div className="relative">
                                 <img
-                                    src={product.image}
+                                    src={product.mainImage}
                                     alt=""
                                     className="w-full h-48 object-cover"
                                 />
