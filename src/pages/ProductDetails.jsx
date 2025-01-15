@@ -7,37 +7,24 @@ import AxiosPublic from '../context/AxiosPublic';
 import { useParams } from 'react-router';
 import { IoIosAlert } from "react-icons/io";
 import { FaCaretUp } from "react-icons/fa6";
+import { ReactTyped } from "react-typed";
+import { FaStar } from "react-icons/fa";
 export default function ProductDetails() {
     const AxiosLink = AxiosPublic()
     const { id } = useParams()
     const [product, setProduct] = useState([])
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(null);
     const { user } = useContext(AppContext)
     useEffect(() => {
         AxiosLink.get(`/product/${id}`)
             .then(res => setProduct(res.data))
 
     }, [])
-    const reviews = [
-        {
-            id: 1,
-            author: 'John Doe',
-            avatar: '/placeholder.svg?height=40&width=40',
-            rating: 5,
-            comment: 'Great product! Exactly what I was looking for.',
-            date: '2 days ago'
-        },
-        {
-            id: 2,
-            author: 'Jane Smith',
-            avatar: '/placeholder.svg?height=40&width=40',
-            rating: 4,
-            comment: 'Good quality but shipping took longer than expected.',
-            date: '1 week ago'
-        }
-    ]
-
+    const reviews = []
+    console.log(rating);
     return (
-        <div className="px-4 py-8">
+        <div className="px-4 py-8 max-w-7xl mx-auto">
             <div className="grid mt-14 grid-cols-1  md:items-start lg:items-center md:grid-cols-2 gap-8">
                 <Carousel>
                     {product.images?.map(image => (<div className='w-full'>
@@ -97,29 +84,30 @@ export default function ProductDetails() {
                 <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
 
                 {/* Post Review */}
-                <div className='flex flex-col-reverse justify-between md:flex-row gap-5'>
-                    <div className="space-y-6 basis-1/2">
-                        {reviews.map((review) => (
-                            <div className=" relative bg-white dark:bg-gray-800 shadow-md rounded-xl flex sm:flex-row flex-col gap-[20px] p-4">
-                                <div className="">
-                                    <img
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"
-                                        alt="image"
-                                        className="w-[50px] h-[50px] object-cover rounded-full"
-                                    />
-                                </div>
-                                <div className="">
-                                    <div>
-                                        <h1 className="text-[1.4rem] font-bold leading-[24px]">Jhon Dee</h1>
-
+                <div className='flex flex-col justify-between md:flex-row gap-5'>
+                    {reviews.length === 0 ? (<div><p> <ReactTyped strings={["No Reviews to show...."]} typeSpeed={40}
+                        backSpeed={50} /></p></div>) : (<div className="space-y-6 basis-1/2">
+                            {reviews.map((review) => (
+                                <div className=" relative bg-white dark:bg-gray-800 shadow-md rounded-xl flex sm:flex-row flex-col gap-[20px] p-4">
+                                    <div className="">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"
+                                            alt="image"
+                                            className="w-[50px] h-[50px] object-cover rounded-full"
+                                        />
                                     </div>
-                                    <span className="text-[0.9rem] text-gray-400">UI/UX Designer</span>
-                                    <p className="text-gray-500 mt-3 pr-10 text-[0.9rem]">UI is the saddle, the stirrups, & the reins. UX is
-                                        the feeling you get being able to ride the horse.</p>
+                                    <div className="">
+                                        <div>
+                                            <h1 className="text-[1.4rem] font-bold leading-[24px]">Jhon Dee</h1>
+
+                                        </div>
+                                        <span className="text-[0.9rem] text-gray-400">UI/UX Designer</span>
+                                        <p className="text-gray-500 mt-3 pr-10 text-[0.9rem]">UI is the saddle, the stirrups, & the reins. UX is
+                                            the feeling you get being able to ride the horse.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>)}
                     <div className="bg-gray-50 w-full basis-1/2 dark:bg-gray-800 p-4 rounded-lg mb-8">
                         <div className="flex items-start gap-4">
                             <img
@@ -137,6 +125,23 @@ export default function ProductDetails() {
                                     className="w-full resize-none p-3 rounded-lg border min-h-[100px] focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
 
                                 />
+                                <span className='font-semibold mb-3'>Rating:</span>
+                                <div className="flex items-center space-x-1">
+                                    {[...Array(5)].map((_, index) => {
+                                        const starRating = index + 1;
+                                        return (
+                                            <FaStar
+                                                key={starRating}
+                                                className={`cursor-pointer ${starRating <= (hover || rating) ? "text-yellow-400" : "text-gray-300"
+                                                    }`}
+                                                size={24}
+                                                onClick={() => setRating(starRating)}
+                                                onMouseEnter={() => setHover(starRating)}
+                                                onMouseLeave={() => setHover(null)}
+                                            />
+                                        );
+                                    })}
+                                </div>
                                 <div className="flex justify-end items-center mt-2">
                                     <AwesomeButton
                                         type="primary"
