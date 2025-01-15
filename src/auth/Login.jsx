@@ -4,21 +4,38 @@ import Lottie from 'lottie-react'
 import { NavLink, useLocation, useNavigate } from 'react-router'
 import { AppContext } from '../context/AppContext'
 export default function Login() {
-    const { googleSignIn } = useContext(AppContext)
-    const [loading, setLoading] = useState(false)
+    const { googleSignIn, loginUser } = useContext(AppContext)
+    const [loadingGoogle, setLoadingG] = useState(false)
+    const [loadingNormal, setLoadingN] = useState(false)
     const location = useLocation()
+    console.log(location.pathname);
     const navigate = useNavigate()
     const from = location?.state || "/"
-
-    const handleGoogleSignIn = () => {
+    const handleLogin = async e => {
+        e.preventDefault()
+        const event = e.target
+        const email = event.Email.value
+        const password = event.Password.value
         try {
-            setLoading(true)
-            googleSignIn()
+            setLoadingN(true)
+            await loginUser(email, password)
+
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false)
-            navigate(from)
+            setLoadingN(false)
+            { location.state === "/login" ? (navigate("/")) : (navigate(from)) }
+        }
+    }
+    const handleGoogleSignIn = async () => {
+        try {
+            setLoadingG(true)
+            await googleSignIn()
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoadingG(false)
+            { location.state === "/login" ? (navigate("/")) : (navigate(from)) }
         }
     }
     return (
@@ -33,10 +50,11 @@ export default function Login() {
                         <h1 className="text-3xl font-bold">Welcome Back!</h1>
                         <p className="text-gray-500">Please enter login details below</p>
 
-                        <form className="space-y-4">
+                        <form onSubmit={handleLogin} className="space-y-4">
                             <div className="space-y-2">
                                 <label className="block text-sm text-gray-500">Email</label>
                                 <input
+                                    name='Email'
                                     type="email"
                                     placeholder="Enter the email"
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
@@ -46,6 +64,7 @@ export default function Login() {
                             <div className="space-y-2">
                                 <label className="block text-sm text-gray-500">Password</label>
                                 <input
+                                    name='Password'
                                     type="password"
                                     placeholder="Enter the Password"
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
@@ -62,7 +81,7 @@ export default function Login() {
                                 type="submit"
                                 className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
                             >
-                                Sign in
+                                {loadingNormal ? (<span className="loading loading-spinner loading-md"></span>) : "Sign In"}
                             </button>
                         </form>
                         <div className="relative">
@@ -74,7 +93,7 @@ export default function Login() {
                             </div>
                         </div>
                         <button onClick={handleGoogleSignIn} className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                            {loading ? (<span className="loading loading-spinner loading-md"></span>) : (<svg className="w-5 h-5" viewBox="0 0 24 24">
+                            {loadingGoogle ? (<span className="loading loading-spinner loading-md"></span>) : (<svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
                                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                                     fill="#4285F4"

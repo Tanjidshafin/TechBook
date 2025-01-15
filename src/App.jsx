@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Footer from './components/Footer';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
+import Private from './auth/Private';
+import ProductDetails from './pages/ProductDetails';
 
 
 
@@ -49,6 +51,9 @@ function App() {
           <Signup />
         </motion.div>
         } />
+        <Route path="/product/:id" element={<Private>
+          <ProductDetails />
+        </Private>} />
       </Routes>
       <Footer />
       <div className="fixed bottom-4 right-4">

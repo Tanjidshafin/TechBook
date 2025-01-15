@@ -9,13 +9,37 @@ import { CiNoWaitingSign } from "react-icons/ci";
 import { TbLogout2 } from "react-icons/tb";
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase.init';
+import Swal from 'sweetalert2';
 const Navbar = () => {
     const { user } = useContext(AppContext)
     const [accountMenuOpen, setAccountMenuOpen] = useState(false)
     //logout
-    const handleLogout = () => {
-        signOut(auth)
-            .then(res => console.log("Log out successful"))
+    const handleLogout = async () => {
+        try {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You have to login again to access again!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Logout!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    signOut(auth)
+                        .then(res => {
+                            Swal.fire({
+                                title: "You have beeen logged out!",
+                                text: "Please Login Again, Thank You",
+                                icon: "success"
+                            });
+                        })
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
     }
     //dark mode
     const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -106,7 +130,7 @@ const Navbar = () => {
                             onClick={() => setAccountMenuOpen(!accountMenuOpen)}>
                             <div className="relative w-9">
                                 <img
-                                    src="https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?t=st=1724605498~exp=1724609098~hmac=7f6fc106bae2c17b0c93af1b2e5483d9d8368f3e51284aaec7c7d50590d2bae5&w=740"
+                                    src={user.photoURL ? user.photoURL : "https://cdn.vectorstock.com/i/500p/43/94/default-avatar-photo-placeholder-icon-grey-vector-38594394.jpg"}
                                     alt="avatar" className="w-[35px] h-[35px] rounded-full object-cover" />
                                 <div
                                     className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
@@ -124,7 +148,7 @@ const Navbar = () => {
                                 </p>
                                 <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
                                     <CiNoWaitingSign />
-                                    Status
+                                   Membership Status
                                 </p>
                                 <div className="mt-3 border-t border-gray-200 pt-[5px]">
                                     <button onClick={handleLogout} className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">

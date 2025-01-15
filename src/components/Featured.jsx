@@ -42,8 +42,8 @@ const Featured = () => {
                             </div>
                             <div className="p-4">
                                 <p className="text-gray-400 text-sm mb-2 line-clamp-2">Posted on: {product.time}</p>
-                                <h2 className="text-xl font-bold text-indigo-700 mb-2 truncate">{product.name}</h2>
-                                <div className='flex flex-col justify-between'>
+                                <NavLink to={`/product/${product._id}`} className="text-xl font-bold text-indigo-700 truncate">{product.name}</NavLink>
+                                <div className='flex flex-col mt-4 justify-between'>
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {product.tags.map(tag => (<span
 

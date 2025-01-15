@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SignupImage from "../assets/Signup.json"
 import Lottie from 'lottie-react'
+import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router'
 export default function Signup() {
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+    const { registerUser } = useContext(AppContext)
     const handleRegister = async e => {
         e.preventDefault()
         const event = e.target
@@ -12,12 +16,13 @@ export default function Signup() {
         const password = event.Password.value
         try {
             setLoading(true)
-
+            await registerUser(email, password, name, image)
         } catch (error) {
             console.log(error);
         }
         finally {
-
+            setLoading(false)
+            navigate("/")
         }
     }
     return (
@@ -53,8 +58,9 @@ export default function Signup() {
                                 <input
                                     name='firstName'
                                     type="text"
+                                    placeholder='Enter First Name'
                                     required
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-600 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -64,8 +70,9 @@ export default function Signup() {
                                 <input
                                     name='lastName'
                                     type="text"
+                                    placeholder='Enter Last Name'
                                     required
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-600 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -74,9 +81,10 @@ export default function Signup() {
                                 </label>
                                 <input
                                     name='imageUrl'
+                                    placeholder='Enter Image URL'
                                     type="url"
                                     required
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-600 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
                                 />
                             </div>
 
@@ -85,10 +93,11 @@ export default function Signup() {
                                     Email address
                                 </label>
                                 <input
+                                    placeholder='Enter Email'
                                     name='Email'
                                     type="email"
                                     required
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-600 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
                                 />
                             </div>
 
@@ -97,10 +106,11 @@ export default function Signup() {
                                     Password
                                 </label>
                                 <input
+                                    placeholder='Enter Password'
                                     name='Password'
                                     type="password"
                                     required
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-600 border border-gray-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition"
                                 />
                             </div>
 
@@ -108,7 +118,7 @@ export default function Signup() {
                                 type="submit"
                                 className="w-full py-3 px-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition"
                             >
-                                Complete Sign up
+                                {loading ? (<span className="loading loading-spinner loading-md"></span>) : "Complete Sign Up"}
                             </button>
 
                             <p className="text-sm text-center text-gray-500">
