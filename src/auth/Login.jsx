@@ -1,5 +1,5 @@
 import React from 'react'
-import loginImage from "../assets/Banner-slide.json"
+import loginImage from "../assets/LoginImage.json"
 import Lottie from 'lottie-react'
 import { NavLink } from 'react-router'
 export default function Login() {
