@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useLocation } from 'react-router'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Footer from './components/Footer';
@@ -7,10 +7,21 @@ import Login from './auth/Login';
 import Signup from './auth/Signup';
 import Private from './auth/Private';
 import ProductDetails from './pages/ProductDetails';
+import Dashboard from './components/Dashboard';
+import { useContext } from 'react';
+import { AppContext } from './context/AppContext';
+import MyProfile from './dashboard/MyProfile';
+import MyProducts from './dashboard/MyProducts';
+import AddProduct from './dashboard/AddProduct';
+import PendingProducts from './dashboard/PendingProducts';
+import ReportedProducts from './dashboard/ReportedProducts';
+import Statistics from './dashboard/Statistics';
+import ManageUsers from './dashboard/ManageUsers';
 
 
 
 function App() {
+  const location = useLocation()
   const pageVariants = {
     initial: { opacity: 0, x: -100 },
     animate: { opacity: 1, x: 0 },
@@ -18,8 +29,8 @@ function App() {
   };
   return (
     <div className='max-w-screen-2xl mx-auto'>
-      <Navbar />
 
+      {location.pathname.startsWith("/dashboard") ? "" : (<Navbar />)}
       <Routes>
         <Route path="/" element={<motion.div
           variants={pageVariants}
@@ -51,15 +62,62 @@ function App() {
           <Signup />
         </motion.div>
         } />
-        <Route path="/product/:id" element={<Private>
-          <ProductDetails />
-        </Private>} />
+        <Route path="/product/:id" element={<motion.div
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+        >
+          <Private>
+            <ProductDetails />
+          </Private>
+        </motion.div>
+        } />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index path="my-profile" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <MyProfile />
+            </motion.div>
+          } />
+          <Route path="add-product" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <AddProduct />
+            </motion.div>
+          } />
+          <Route path="my-products" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <MyProducts />
+            </motion.div>
+          } />
+          <Route path="reported-products" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <ReportedProducts />
+            </motion.div>
+          } />
+          <Route path="pending-products" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <PendingProducts />
+            </motion.div>
+          } />
+          <Route path="statistics" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <Statistics />
+            </motion.div>
+          } />
+          <Route path="manage-users" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <ManageUsers />
+            </motion.div>
+          } />
+        </Route>
+
+
       </Routes>
-      <Footer />
+
+      {location.pathname.startsWith("/dashboard") ? "" : (<Footer />)}
       <div className="fixed bottom-4 right-4">
         <a
-
-
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400"
         >

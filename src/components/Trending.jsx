@@ -36,7 +36,7 @@ const Trending = () => {
             <div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
                     Trendingproducts.map(product => (
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
+                        <div key={product._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
                             <div className="relative">
                                 <img
                                     src={product.mainImage}
