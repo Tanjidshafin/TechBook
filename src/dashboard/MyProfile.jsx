@@ -6,7 +6,6 @@ import { MdOutlineEdit } from "react-icons/md";
 import { BiSolidPurchaseTag } from "react-icons/bi";
 const MyProfile = () => {
   const { user } = useContext(AppContext)
-  console.log(user);
   return (
     <div>
       <p className="text-3xl font-bold text-center mt-10">My Profile</p>
@@ -36,13 +35,14 @@ const MyProfile = () => {
                 Edit
               </button>
               <button className="bg-primary w-full justify-center py-2 px-4 rounded-md flex items-center gap-[8px] text-[1rem] text-white">
-              <BiSolidPurchaseTag />
-               Purchase
+                <BiSolidPurchaseTag />
+                Purchase
               </button>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };

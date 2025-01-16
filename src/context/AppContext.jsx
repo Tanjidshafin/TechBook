@@ -29,7 +29,6 @@ const AppContextProvider = (props) => {
                     AxiosLink.post("/jwt", userEmail)
                         .then(res => {
                             setUser(user)
-                            console.log(user);
                             localStorage.setItem("token", res.data.token)
                         })
                 } else {

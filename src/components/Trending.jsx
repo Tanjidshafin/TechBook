@@ -5,7 +5,8 @@ import { NavLink } from 'react-router'
 import { AwesomeButton } from 'react-awesome-button'
 import AxiosPublic from '../context/AxiosPublic'
 import Swal from 'sweetalert2'
-import UseProducts from '../hooks/UseProducts'
+import noData from "../assets/No_ data.json"
+import Lottie from 'lottie-react'
 const Trending = () => {
     const [Trendingproducts, refetch] = UseProductsTrending()
     const AxiosLink = AxiosPublic()
@@ -33,7 +34,14 @@ const Trending = () => {
     return (
         <div className='mt-20 px-4 sm:px-6 lg:px-8'>
             <PageStarter title="Trending Products" subTitle="Discover top-rated tech innovations in our Featured Products section. Explore cutting-edge tools, software, and apps handpicked for you." />
-            <div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            {Trendingproducts.length === 0 ? (<div>
+                <div
+                    className="boxShadow p-6 sm:px-20 sm:py-14 flex items-center justify-center flex-col gap-[4px] rounded-xl">
+                    <Lottie animationData={noData} loop={true} className='w-[200px]' />
+                    <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Products to Show...</h1>
+                    <p className="text-[0.9rem] text-gray-500">Be the first to add the first product.</p>
+                </div>
+            </div>) : (<div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
                     Trendingproducts.map(product => (
                         <div key={product._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
@@ -48,9 +56,9 @@ const Trending = () => {
                                 </div>
                             </div>
                             <div className="p-4">
-                                <h2 className="text-xl font-bold text-indigo-600 mb-2 truncate">{product.name}</h2>
-                                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
-                                <div className='flex flex-col justify-between'>
+                                <p className="text-gray-400 text-sm mb-2 line-clamp-2">Posted on: {product.time}</p>
+                                <NavLink to={`/product/${product._id}`} className="text-xl font-bold text-indigo-700 truncate">{product.name}</NavLink>
+                                <div className='flex flex-col mt-4 justify-between'>
                                     <div className="flex flex-wrap gap-2 mb-4">
                                         {product.tags.map(tag => (<span
 
@@ -75,7 +83,8 @@ const Trending = () => {
 
                     ))
                 }
-            </div>
+            </div>)
+            }
             <NavLink className="flex justify-center md:justify-end mt-5">
                 <AwesomeButton type="secondary">All Products</AwesomeButton>
             </NavLink>
