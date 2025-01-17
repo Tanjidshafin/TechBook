@@ -4,6 +4,7 @@ import AxiosPublic from '../context/AxiosPublic'
 import Swal from 'sweetalert2'
 import Lottie from 'lottie-react'
 import noData from "../assets/No_ data.json"
+import { NavLink } from 'react-router'
 
 const PendingProducts = () => {
   const [products, productRefetched] = UseProducts()
@@ -70,6 +71,36 @@ const PendingProducts = () => {
       setLoading(false)
     }
   }
+  const handleFeatured = async (id) => {
+    try {
+      setLoading(true)
+      await AxiosLink.patch(`/featured/${id}`)
+        .then(res => {
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You want to make the product featured",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Featured",
+                text: "Product has been Featured",
+                icon: "success"
+              });
+              productRefetched()
+            }
+          });
+        })
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <div>
       <p className="text-3xl font-bold text-center mt-10">Pending Products</p>
@@ -86,6 +117,8 @@ const PendingProducts = () => {
               <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Name</th>
               <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Accept</th>
               <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Reject</th>
+              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Featured</th>
+              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Action</th>
             </tr>
           </thead >
           <tbody>
@@ -101,17 +134,31 @@ const PendingProducts = () => {
                 <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.name}</td>
                 <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                   <button onClick={() => handleAccepted(product._id)}
-                    className="px-3 py-1 rounded text-white bg-green-500 hover:bg-green-600"
+                    className="px-3 btn py-1 rounded text-white bg-green-500 hover:bg-green-600"
                   >
                     Accept
                   </button>
                 </td>
                 <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                   <button onClick={() => handleRejected(product._id)}
-                    className="px-3 py-1 rounded text-white bg-red-500 hover:bg-red-600"
+                    className="px-3 py-1 btn rounded text-white bg-red-500 hover:bg-red-600"
                   >
                     Reject
                   </button>
+                </td>
+                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                  <button disabled={product.speciality === "featured"} onClick={() => handleFeatured(product._id)}
+                    className="px-3 btn py-1 rounded text-white bg-red-500 hover:bg-red-600"
+                  >
+                    Make Featured
+                  </button>
+                </td>
+                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                  <NavLink to={`/product/${product._id}`}
+                    className="px-3 btn py-1 rounded text-white bg-yellow-500 hover:bg-yellow-600"
+                  >
+                    View Details
+                  </NavLink>
                 </td>
               </tr>
             ))}

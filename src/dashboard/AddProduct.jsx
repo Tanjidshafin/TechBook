@@ -22,7 +22,7 @@ const AddProduct = () => {
             github: '',
             twitter: ''
         },
-        speciality: '',
+        speciality: 'trending',
         time: date.toLocaleTimeString(),
         mainImage: '',
         images: ['', '', ''],
@@ -146,19 +146,6 @@ const AddProduct = () => {
                                 type="number"
                                 name="upvoteCounts"
                                 value={formData.upvoteCounts}
-                                onChange={handleChange}
-                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-amber-600"
-                                required
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="block text-sm text-gray-600 dark:text-gray-300">
-                                Speciality*
-                            </label>
-                            <input
-                                type="text"
-                                name="speciality"
-                                value={formData.speciality}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-amber-600"
                                 required

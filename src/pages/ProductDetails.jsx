@@ -13,9 +13,11 @@ import ReactStars from "react-rating-stars-component";
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
+import UseReported from '../hooks/UseReported';
 export default function ProductDetails() {
     const AxiosLink = AxiosPublic()
     const { id } = useParams()
+    const [, reportedRefetched] = UseReported()
     const [loading, setLoading] = useState(false)
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
@@ -117,6 +119,32 @@ export default function ProductDetails() {
         }
 
     }
+    const reportedData = {
+        id: product._id,
+        name: product.name,
+        image: product.mainImage,
+        email: user.email,
+        speciality: product.speciality
+    }
+    const handleReport = async () => {
+        try {
+            setLoading(true)
+            await AxiosLink.post("/add-reported-products", reportedData)
+                .then(res => {
+                    Swal.fire({
+                        title: "Reported",
+                        text: `${res.data.message}`,
+                        icon: "success"
+                    });
+                    console.log(res);
+                    reportedRefetched()
+                })
+        } catch (Error) {
+            console.log(Error);
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div className="px-4 py-8 max-w-7xl mx-auto">
             <div className="grid mt-14 grid-cols-1  md:items-start lg:items-center md:grid-cols-2 gap-8">
@@ -157,12 +185,14 @@ export default function ProductDetails() {
                             </ul>
                         </div>
                         <div className="flex gap-4">
-                            <AwesomeButton
-                                type="danger"
-                            >
-                                <span><IoIosAlert /></span>
-                                <span className='ml-2'>Report</span>
-                            </AwesomeButton>
+                            <button onClick={handleReport}>
+                                <AwesomeButton
+                                    type="danger"
+                                >
+                                    <span><IoIosAlert /></span>
+                                    <span className='ml-2'>Report</span>
+                                </AwesomeButton>
+                            </button>
                             <button onClick={() => handleUpvote(product._id)}>
                                 <AwesomeButton
                                     type="secondary"
