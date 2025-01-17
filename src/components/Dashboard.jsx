@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import {
-    IoChevronBackOutline,
-    IoNotificationsOutline,
-    IoSettingsOutline
-} from "react-icons/io5";
 import { FiBarChart, FiPieChart } from "react-icons/fi";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { GoHome, GoProjectSymlink, GoSidebarCollapse } from "react-icons/go";
-import { CiCalendar, CiLogout } from "react-icons/ci";
+import { GoHome, GoProjectSymlink } from "react-icons/go";
+import { CiLogout } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { NavLink, Outlet, useNavigate } from 'react-router';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase.init';
-import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaUsers } from "react-icons/fa6";
 import { RiCoupon2Line } from "react-icons/ri";
 import Swal from 'sweetalert2';
+import IsAdmin from '../hooks/IsAdmin';
+import IsModerator from '../hooks/IsModerator';
 const Dashboard = () => {
+    const [isAdmin] = IsAdmin()
+    const [isModerator] = IsModerator()
     const { user } = useContext(AppContext)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
@@ -93,39 +91,67 @@ const Dashboard = () => {
                             <GoProjectSymlink className="text-[1.5rem] text-gray-400" />
                             <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Add Products</span>
                         </NavLink>
-                        <NavLink to="/dashboard/reported-products" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
+                        {isAdmin || isModerator ? (
+                            <>
+                                <NavLink
+                                    to="/dashboard/reported-products"
+                                    className={({ isActive }) =>
+                                        `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""
+                                        } p-[5px] rounded-md cursor-pointer`
+                                    }
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="size-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                                        />
+                                    </svg>
+                                    <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">
+                                        Reported Products
+                                    </span>
+                                </NavLink>
 
-                        }>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                            </svg>
+                                <NavLink
+                                    to="/dashboard/pending-products"
+                                    className={({ isActive }) =>
+                                        `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""
+                                        } p-[5px] rounded-md cursor-pointer`
+                                    }
+                                >
+                                    <FiBarChart className="text-[1.5rem] text-gray-400" />
+                                    <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">
+                                        Pending Products
+                                    </span>
+                                </NavLink>
+                            </>
+                        ) : null}
 
-                            <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Reported Products</span>
-                        </NavLink>
-                        <NavLink to="/dashboard/pending-products" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                        }>
-                            <FiBarChart className="text-[1.5rem] text-gray-400" />
-                            <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Pending Products</span>
-                        </NavLink>
-                        <NavLink to="/dashboard/statistics" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
+                        {isAdmin ? (<><NavLink to="/dashboard/statistics" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
 
                         }>
                             <FiPieChart className="text-[1.5rem] text-gray-400" />
                             <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Statistics</span>
                         </NavLink>
-                        <NavLink to="/dashboard/manage-users" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
+                            <NavLink to="/dashboard/manage-users" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
 
-                        }>
-                            <FaUsers className="text-[1.5rem] text-gray-400" />
-                            <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Users</span>
-                        </NavLink>
-                        <NavLink className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
+                            }>
+                                <FaUsers className="text-[1.5rem] text-gray-400" />
+                                <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Users</span>
+                            </NavLink>
+                            <NavLink className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
 
-                        }>
-                            <RiCoupon2Line className="text-[1.5rem] text-gray-400" />
-                            <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Coupons</span>
-                        </NavLink>
+                            }>
+                                <RiCoupon2Line className="text-[1.5rem] text-gray-400" />
+                                <span className="hidden md:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Coupons</span>
+                            </NavLink></>) : null}
                     </div>
                 </div>
                 {/* Profile section */}

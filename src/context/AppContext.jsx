@@ -56,7 +56,8 @@ const AppContextProvider = (props) => {
                 dateTime: [
                     new Date().toLocaleDateString(),
                     new Date().toLocaleTimeString()
-                ]
+                ],
+                role: "user"
             };
             await AxiosLink.post("/add-user", addedUser);
             Swal.fire({
@@ -87,6 +88,7 @@ const AppContextProvider = (props) => {
                 image: currentUser.photoURL,
                 name: currentUser.displayName,
                 email: currentUser.email,
+                role: "user",
                 dateTime: [
                     new Date().toLocaleDateString(),
                     new Date().toLocaleTimeString()
