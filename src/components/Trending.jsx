@@ -1,29 +1,48 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PageStarter from '../hooks/PageStarter'
 import UseProductsTrending from '../hooks/UseProductsTrending'
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import { AwesomeButton } from 'react-awesome-button'
 import AxiosPublic from '../context/AxiosPublic'
 import Swal from 'sweetalert2'
 import noData from "../assets/No_ data.json"
 import Lottie from 'lottie-react'
+import { AppContext } from '../context/AppContext'
 const Trending = () => {
+    const { user } = useContext(AppContext)
+    const navigate = useNavigate()
     const [Trendingproducts, refetch] = UseProductsTrending()
     const AxiosLink = AxiosPublic()
     const [loading, setLoading] = useState(false)
     //upvote incrementation
     const handleUpvote = async (id, name) => {
         try {
-            setLoading(true)
-            await AxiosLink.patch(`product/${id}`)
-                .then(res => {
-                    Swal.fire({
-                        title: "Upvoted",
-                        text: `You have upvoted ${name}`,
-                        icon: "success"
-                    });
-                })
-            refetch()
+            if (!user) {
+                Swal.fire({
+                    title: "You are not logged in!!!",
+                    text: "Please Login to Interect",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Login Page"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/login")
+                    }
+                });
+            } else {
+                setLoading(true)
+                await AxiosLink.patch(`product/${id}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Upvoted",
+                            text: `You have upvoted ${name}`,
+                            icon: "success"
+                        });
+                    })
+                refetch()
+            }
         } catch (error) {
             console.log(error);
         } finally {

@@ -13,15 +13,16 @@ import ReactStars from "react-rating-stars-component";
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import UseReported from '../hooks/UseReported';
+import IsAdmin from '../hooks/IsAdmin';
 export default function ProductDetails() {
     const AxiosLink = AxiosPublic()
     const { id } = useParams()
-    const [, reportedRefetched] = UseReported()
     const [loading, setLoading] = useState(false)
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
+    const [isAdmin] = IsAdmin()
     const { user } = useContext(AppContext)
+
     //fetch single product details
     const { data: product = [], refetch: singleRefetched } = useQuery({
         queryKey: ['product', id],
@@ -137,7 +138,7 @@ export default function ProductDetails() {
                         icon: "success"
                     });
                     console.log(res);
-                    reportedRefetched()
+                   
                 })
         } catch (Error) {
             console.log(Error);
@@ -211,7 +212,7 @@ export default function ProductDetails() {
                 <div className='flex flex-col justify-between md:flex-row gap-5'>
                     {reviews.length === 0 ? (<div><p> <ReactTyped strings={["No Reviews to show...."]} typeSpeed={40}
                         backSpeed={50} /></p></div>) : (<div className="space-y-6 basis-1/2">
-                            {reviews.reverse().map((review) => (
+                            {reviews.map((review) => (
                                 <div className=" relative bg-white dark:bg-gray-800 shadow-md rounded-xl flex sm:flex-row flex-col gap-[20px] p-4">
                                     <div className="basis-[10%] flex justify-between">
                                         <img
@@ -219,7 +220,7 @@ export default function ProductDetails() {
                                             alt="image"
                                             className="w-[50px] h-[50px] object-cover rounded-full"
                                         />
-                                        <button onClick={() => handleDelete(review._id)} className={`w-10 h-10 p-2 sm:hidden ${review.email === user.email ? "block" : "hidden"} rounded-full bg-white dark:bg-gray-700`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-red-600">
+                                        <button onClick={() => handleDelete(review._id)} className={`w-10 h-10 p-2 sm:hidden ${review.email === user.email ? "block" : isAdmin ? "block" : "hidden"} rounded-full bg-white dark:bg-gray-700`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-red-600">
                                             <path fillRule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clipRule="evenodd" />
                                         </svg>
                                         </button>
@@ -228,7 +229,7 @@ export default function ProductDetails() {
                                         <div>
                                             <div className='flex justify-between sm:items-center'>
                                                 <h1 className="text-[1.4rem] font-bold leading-[24px]">{review.name}</h1>
-                                                <button onClick={() => handleDelete(review._id)} className={`w-10 p-2 hidden ${user.email === review.email ? "sm:block" : "sm:hidden"} rounded-full bg-white dark:bg-gray-700`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-red-600">
+                                                <button onClick={() => handleDelete(review._id)} className={`w-10 p-2 hidden ${user.email === review.email ? "sm:block" : isAdmin ? "sm:block" : "sm:hidden"} rounded-full bg-white dark:bg-gray-700`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 text-red-600">
                                                     <path fillRule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clipRule="evenodd" />
                                                 </svg>
                                                 </button>

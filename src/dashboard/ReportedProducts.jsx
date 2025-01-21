@@ -42,31 +42,31 @@ const ReportedProducts = () => {
         {reportedProducts.length === 0 ? (<div
           className="boxShadow p-6 sm:px-20 sm:py-14 flex items-center justify-center flex-col gap-[4px] rounded-xl">
           <Lottie animationData={noData} loop={true} className='w-[200px]' />
-          <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Reported Products to Show...</h1>
-          <p className="text-[0.9rem] text-gray-500">No Reported Products available in database.</p>
-        </div>) : (<table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600 mt-5">
+          <h1 className="text-[1.4rem] mt-6 font-[500] text-black text-center dark:text-gray-300">No Reported Products to Show...</h1>
+          <p className="text-[0.9rem] text-center text-gray-500">No Reported Products available in database.</p>
+        </div>) : (<div className='overflow-x-auto'><table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600 mt-5">
           <thead className="bg-gray-200 dark:bg-gray-700">
             <tr>
-              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Image</th>
-              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Name</th>
-              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Speciality</th>
-              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Action</th>
-              <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Delete</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Image</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Name</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Speciality</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Action</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Delete</th>
             </tr>
           </thead >
           <tbody>
             {reportedProducts.map((product) => (
               <tr key={product._id} className="even:bg-gray-100 dark:even:bg-gray-800">
-                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <img
                     src={product.mainImage || 'placeholder.jpg'}
                     alt={product.name}
                     className="w-16 h-16 object-cover rounded-md"
                   />
                 </td>
-                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.name}</td>
-                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.speciality}</td>
-                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">{product.name}</td>
+                <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">{product.speciality}</td>
+                <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <NavLink to={`/product/${product.id}`}
 
                     className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
@@ -74,7 +74,7 @@ const ReportedProducts = () => {
                     View Details
                   </NavLink>
                 </td>
-                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <button
                     onClick={() => handleDelete(product.id, product._id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
@@ -85,7 +85,7 @@ const ReportedProducts = () => {
               </tr>
             ))}
           </tbody>
-        </table >)}
+        </table ></div>)}
       </div >
     </div >
   )

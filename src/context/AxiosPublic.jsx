@@ -1,7 +1,11 @@
 import axios from 'axios';
-import React from 'react'
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase.init';
+import { useNavigate } from 'react-router';
+
 
 const AxiosPublic = () => {
+    const navigate = useNavigate()
     const AxiosLink = axios.create({
         baseURL: 'http://localhost:5000/'
     });
@@ -22,7 +26,11 @@ const AxiosPublic = () => {
         return response;
     }, function (error) {
         console.log(error.response);
-        
+        signOut(auth)
+            .then(res => {
+                localStorage.removeItem("token")
+                navigate("/login")
+            })
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
         return Promise.reject(error);

@@ -11,7 +11,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase.init';
 import Swal from 'sweetalert2';
 const Navbar = () => {
-    const { user } = useContext(AppContext)
+    const { user, toggleDarkMode } = useContext(AppContext)
     const [accountMenuOpen, setAccountMenuOpen] = useState(false)
     //logout
     const handleLogout = async () => {
@@ -41,20 +41,7 @@ const Navbar = () => {
         }
 
     }
-    //dark mode
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        const savedMode = localStorage.getItem('darkMode');
-        return savedMode === 'true';
-    });
-    const toggleDarkMode = () => {
-        const newDarkMode = !isDarkMode;
-        setIsDarkMode(newDarkMode);
-        document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
-        localStorage.setItem('darkMode', newDarkMode);
-    };
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    }, [isDarkMode]);
+
 
     return (
         <div>
@@ -129,9 +116,9 @@ const Navbar = () => {
                     </button>
                     {user ? (<div className="flex items-center gap-[15px]">
                         <div className="flex items-center gap-[10px] cursor-pointer relative"
-                            onClick={() => setAccountMenuOpen(!accountMenuOpen)}>
+                        >
                             <div className="relative w-9">
-                                <img
+                                <img onClick={() => setAccountMenuOpen(!accountMenuOpen)}
                                     src={user.photoURL ? user.photoURL : "https://cdn.vectorstock.com/i/500p/43/94/default-avatar-photo-placeholder-icon-grey-vector-38594394.jpg"}
                                     alt="avatar" className="w-[35px] h-[35px] rounded-full object-cover" />
                                 <div
@@ -139,7 +126,7 @@ const Navbar = () => {
                             </div>
 
                             <div
-                                className={`${accountMenuOpen ? "translate-y-0 opacity-100 z-[1]" : "translate-y-[10px] opacity-0 z-[-1]"} bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
+                                className={`${accountMenuOpen ? "block" : "hidden"} bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
                                 <NavLink to="/dashboard/my-profile" className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
                                     <FiUser />
                                     {user.displayName}

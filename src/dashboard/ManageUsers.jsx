@@ -73,55 +73,57 @@ const ManageUsers = () => {
                     <Lottie animationData={noData} loop={true} className='w-[200px]' />
                     <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Users to Show...</h1>
                     <p className="text-[0.9rem] text-gray-500">No User Logged in Till Now.</p>
-                </div>) : (<table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600 mt-5">
-                    <thead className="bg-gray-200 dark:bg-gray-700">
-                        <tr>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Image</th>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Name</th>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Email</th>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Date/Time</th>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Action</th>
-                            <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Delete</th>
-                        </tr>
-                    </thead >
-                    <tbody>
-                        {users.map((product) => (
-                            <tr key={product._id} className="even:bg-gray-100 dark:even:bg-gray-800">
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                    <img
-                                        src={product.image || 'placeholder.jpg'}
-                                        alt={product.name}
-                                        className="w-16 h-16 object-cover rounded-md"
-                                    />
-                                </td>
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.name}</td>
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.email}</td>
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{product.dateTime[0] + ", " + product.dateTime[1]}</td>
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                    {product?.role === "moderator" ? (<button onClick={() => makeAdmin(product._id, product.name)}
-
-                                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                                    >
-                                        Make Admin
-                                    </button>) : product?.role === "admin" ? (<p>Admin</p>) : (<button onClick={() => makeModerator(product._id, product.name)}
-
-                                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                                    >
-                                        Make Moderator
-                                    </button>)}
-                                </td>
-                                <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                    <button
-
-                                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
+                </div>) : (<div className='overflow-x-auto'>
+                    <table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600 mt-5">
+                        <thead className="bg-gray-200 dark:bg-gray-700">
+                            <tr>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Image</th>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Name</th>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Email</th>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Date/Time</th>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Action</th>
+                                <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Delete</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table >)}
+                        </thead >
+                        <tbody>
+                            {users.map((product) => (
+                                <tr key={product._id} className="even:bg-gray-100 dark:even:bg-gray-800">
+                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+                                        <img
+                                            src={product.image || 'placeholder.jpg'}
+                                            alt={product.name}
+                                            className="lg:w-16  lg:h-16  object-cover rounded-md"
+                                        />
+                                    </td>
+                                    <td className="border text-sm md:text-md border-gray-300  dark:border-gray-600 px-4 py-2">{product.name}</td>
+                                    <td className="border text-sm md:text-md border-gray-300  dark:border-gray-600 px-4 py-2">{product.email}</td>
+                                    <td className="border text-sm md:text-md border-gray-300  dark:border-gray-600 px-4 py-2">{product.dateTime[0] + ", " + product.dateTime[1]}</td>
+                                    <td className="border text-sm md:text-md border-gray-300  dark:border-gray-600 px-4 py-2">
+                                        {product?.role === "moderator" ? (<button onClick={() => makeAdmin(product._id, product.name)}
+
+                                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                                        >
+                                            Make Admin
+                                        </button>) : product?.role === "admin" ? (<p>Admin</p>) : (<button onClick={() => makeModerator(product._id, product.name)}
+
+                                            className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+                                        >
+                                            Make Moderator
+                                        </button>)}
+                                    </td>
+                                    <td className="border text-sm md:text-md border-gray-300  dark:border-gray-600 px-4 py-2">
+                                        <button
+
+                                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table >
+                </div>)}
             </div >
         </div >
     )

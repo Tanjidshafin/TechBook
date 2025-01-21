@@ -17,6 +17,8 @@ import PendingProducts from './dashboard/PendingProducts';
 import ReportedProducts from './dashboard/ReportedProducts';
 import Statistics from './dashboard/Statistics';
 import ManageUsers from './dashboard/ManageUsers';
+import UpdateProduct from './pages/UpdateProduct';
+import AllProducts from './pages/AllProducts';
 
 
 
@@ -73,6 +75,23 @@ function App() {
             <ProductDetails />
           </Private>
         </motion.div>
+        } />
+        <Route path="/products" element={<motion.div
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+        >
+
+          <AllProducts />
+
+        </motion.div>
+        } />
+        <Route path="/updateUser/:id" element={
+          <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+            <UpdateProduct />
+          </motion.div>
         } />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index path="my-profile" element={

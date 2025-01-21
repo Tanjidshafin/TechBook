@@ -9,7 +9,7 @@ const Private = ({ children }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 1000)
+        }, 2000)
     }, [])
     if (loading) {
         return <div className='min-h-screen flex justify-center items-center'>

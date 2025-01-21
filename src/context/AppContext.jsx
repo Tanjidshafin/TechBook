@@ -44,6 +44,20 @@ const AppContextProvider = (props) => {
         })
         return unsubscribe
     }, [location.pathname])
+    //dark mode
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const savedMode = localStorage.getItem('darkMode');
+        return savedMode === 'true';
+    });
+    const toggleDarkMode = () => {
+        const newDarkMode = !isDarkMode;
+        setIsDarkMode(newDarkMode);
+        document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
+        localStorage.setItem('darkMode', newDarkMode);
+    };
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    }, [isDarkMode]);
     //google login
     const googleSignIn = async () => {
         try {
@@ -118,7 +132,7 @@ const AppContextProvider = (props) => {
             })
     }
 
-    const value = { googleSignIn, user, registerUser, loginUser }
+    const value = { googleSignIn, user, registerUser, loginUser,toggleDarkMode }
     return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
 }
 export default AppContextProvider;

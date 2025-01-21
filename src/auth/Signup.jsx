@@ -33,7 +33,7 @@ export default function Signup() {
             </Helmet>
             <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="w-full max-w-md space-y-8">
-                    <div className="flex items-center sm:justify-start justify-center text-3xl gap-2 font-semibold">
+                    <div className="flex items-center justify-start text-3xl gap-2 font-semibold">
                         <img className='md:w-10 md:h-10 w-8 h-8 rounded-full object-cover' src="https://static.vecteezy.com/system/resources/thumbnails/008/386/422/small_2x/tb-or-bt-initial-letter-logo-design-vector.jpg" alt="" />
                         <span>TechBook</span>
                     </div>

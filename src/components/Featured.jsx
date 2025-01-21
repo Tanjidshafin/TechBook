@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PageStarter from '../hooks/PageStarter'
 import { AwesomeButton } from "react-awesome-button";
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import AxiosPublic from '../context/AxiosPublic';
 import UseAcceptedProduct from '../hooks/UseAcceptedProduct';
 import noData from "../assets/No_ data.json"
 import Lottie from 'lottie-react';
+import { AppContext } from '../context/AppContext';
 const Featured = () => {
+    const { user } = useContext(AppContext)
+    const navigate = useNavigate()
     const AxiosLink = AxiosPublic()
     const [loading, setLoading] = useState(false)
     const [acceptedProducts, acceptedProductRefetched] = UseAcceptedProduct()
@@ -33,16 +36,32 @@ const Featured = () => {
     //upvote incrementation
     const handleUpvote = async (id, name) => {
         try {
-            setLoading(true)
-            await AxiosLink.patch(`product/${id}`)
-                .then(res => {
-                    Swal.fire({
-                        title: "Upvoted",
-                        text: `You have upvoted ${name}`,
-                        icon: "success"
-                    });
-                })
-            acceptedProductRefetched()
+            if (!user) {
+                Swal.fire({
+                    title: "You are not logged in!!!",
+                    text: "Please Login to Interect",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Login Page"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/login")
+                    }
+                });
+            } else {
+                setLoading(true)
+                await AxiosLink.patch(`product/${id}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Upvoted",
+                            text: `You have upvoted ${name}`,
+                            icon: "success"
+                        });
+                    })
+                acceptedProductRefetched()
+            }
         } catch (error) {
             console.log(error);
         } finally {
