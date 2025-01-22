@@ -8,6 +8,7 @@ import UseAcceptedProduct from '../hooks/UseAcceptedProduct';
 import noData from "../assets/No_ data.json"
 import Lottie from 'lottie-react';
 import { AppContext } from '../context/AppContext';
+import { MdDoNotDisturbAlt } from "react-icons/md";
 const Featured = () => {
     const { user } = useContext(AppContext)
     const navigate = useNavigate()
@@ -79,50 +80,50 @@ const Featured = () => {
                     <p className="text-[0.9rem] text-gray-500">Be the first to add the first product.</p>
                 </div>
             </div>) : (<div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                {
-                    FeaturedProducts.map(product => (
-                        <div key={product._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl max-w-sm">
-                            <div className="relative">
-                                <img
-                                    src={product.mainImage}
-                                    alt=""
-                                    className="w-full h-48 object-cover"
-                                />
-                                <div className="absolute uppercase top-0 right-0 bg-yellow-400 text-indigo-900 font-bold px-2 py-1 m-2 rounded-full text-xs">
-                                    {product.speciality}
+                {FeaturedProducts.map((product) => (
+                    <a key={product._id} className="group block">
+                        <img
+                            src={product.mainImage ? product.mainImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"}
+                            alt=""
+                            className="w-full object-cover sm:h-[450px]"
+                        />
+
+                        <div className="mt-3 flex justify-between text-sm">
+                            <div>
+                                <div>
+                                    <NavLink to={`/product/${product._id}`} className="text-gray-900 dark:text-gray-400 group-hover:underline group-hover:underline-offset-4">
+                                        {product.name}
+                                    </NavLink>
+                                    <p className="mt-1.5 text-pretty text-xs text-gray-500">
+                                        {product.time}
+                                    </p>
+                                </div>
+
+                                <div className='hidden sm:flex  flex-wrap gap-2'>
+                                    {product.tags.map(tag => (<p className="mt-1.5 text-pretty text-xs text-gray-500">
+                                        {tag}
+                                    </p>))}
                                 </div>
                             </div>
-                            <div className="p-4">
-                                <p className="text-gray-400 text-sm mb-2 line-clamp-2">Posted on: {product.time}</p>
-                                <NavLink to={`/product/${product._id}`} className="text-xl font-bold text-indigo-700 truncate">{product.name}</NavLink>
-                                <div className='flex flex-col mt-4 justify-between'>
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {product.tags.map(tag => (<span
 
-                                            className="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded-full"
-                                        >
-                                            {tag}
-                                        </span>))}
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <button onClick={() => handleUpvote(product._id, product.name)}
-
-                                            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-                                        >
-                                            ▲ Upvote
-                                        </button>
-                                        <span className="text-indigo-600 font-bold text-xl">{product.upvoteCounts}</span>
-
-                                    </div>
-                                </div>
-                            </div>
+                            <p className="text-gray-900">
+                                <button className="flex items-center gap-1">
+                                    {user?.email === product.email ? (<MdDoNotDisturbAlt onClick={() => {
+                                        Swal.fire({
+                                            title: "Cant Upvote",
+                                            text: "You Cant upvote your own posted product!!!",
+                                            icon: "warning"
+                                        });
+                                    }} />) : (<button onClick={() => handleUpvote(product._id, product.name)} className="text-gray-600 hover:text-blue-500">▲</button>)}
+                                    <span className="font-medium cursor-pointer dark:text-gray-400">{product.upvoteCounts}</span>
+                                </button>
+                            </p>
                         </div>
-
-                    ))
-                }
+                    </a>
+                ))}
             </div>)
             }
-            <NavLink className="flex justify-center md:justify-end mt-5">
+            <NavLink to="/products" className="flex justify-center md:justify-end mt-5">
                 <AwesomeButton type="secondary">All Products</AwesomeButton>
             </NavLink>
         </div >

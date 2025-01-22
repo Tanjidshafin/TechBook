@@ -3,6 +3,7 @@ import Banner from '../components/Banner'
 import Featured from '../components/Featured'
 import { Helmet } from 'react-helmet-async'
 import Trending from '../components/Trending'
+import Pricing from '../components/Pricing'
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
             <Banner />
             <Featured />
             <Trending />
+            <Pricing />
         </div>
     )
 }

@@ -54,7 +54,7 @@ export default function ProductDetails() {
     const { data: reviews = [], refetch } = useQuery({
         queryKey: ['reviews', id],
         queryFn: async () => {
-            const res = await AxiosLink.get(`/reviews/${id}`)
+            const res = await AxiosLink.get(`/review/${id}`)
             return res.data
         }
     })

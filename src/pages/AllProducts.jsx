@@ -6,31 +6,33 @@ import AxiosPublic from '../context/AxiosPublic'
 import { MdDoNotDisturbAlt } from "react-icons/md";
 import UseAcceptedProduct from '../hooks/UseAcceptedProduct'
 import { IoSearch } from 'react-icons/io5';
+import { useQuery } from '@tanstack/react-query'
+import Lottie from 'lottie-react'
+import noData from '../assets/No_ data.json'
 const AllProducts = () => {
     const { user } = useContext(AppContext)
-    const [acceptedProducts, acceptedProductRefetched] = UseAcceptedProduct()
+    const [acceptedProducts] = UseAcceptedProduct()
     const AxiosLink = AxiosPublic()
     const [search, setSearch] = useState("")
-    const [products, setProducts] = useState([])
-    const [sortOrder, setSortOrder] = useState("desc")
+    const [sortOrder, setSortOrder] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    if (loading) {
-        return <div className='min-h-screen flex justify-center items-center'>
-            <span className="loading loading-bars loading-lg"></span>
-        </div>
-    }
     //search from backend
     const handleSearch = e => {
         e.preventDefault()
         setSearch(e.target.search.value)
+        refetch()
     }
     //pagination 
     const [pageNumber, setPageNumber] = useState(0)
-    useEffect(() => {
-        AxiosLink.get(`/products/accepted?sort=${sortOrder}&search=${search}&page=${pageNumber}&limit=${productsPerPage}`)
-            .then(res => setProducts(res.data))
-    }, [pageNumber, sortOrder, search])
+    const { data: products = [], refetch } = useQuery({
+        queryKey: ["products", pageNumber, search, sortOrder],
+        queryFn: async () => {
+            const res = await AxiosLink.get(`/products/accepted?sort=${sortOrder}&search=${search}&page=${pageNumber}&limit=${productsPerPage}`)
+            return res.data
+        }
+
+    })
     const productsPerPage = 8
     let page = 0
     if (!search) {
@@ -41,14 +43,14 @@ const AllProducts = () => {
     const updatePageNumber = (num) => {
         if ((num > (page - 1)) || (0 > num)) { return setPageNumber(0) }
         setPageNumber(num)
-        acceptedProductRefetched()
-        refetch()
     }
-    const updatedProducts = products.sort((a, b) => {
+    const updatedProducts = products?.sort((a, b) => {
         const timeA = parseTime(a.time);
         const timeB = parseTime(b.time);
         return timeA - timeB;
-    });
+    })
+
+
     function parseTime(timeStr) {
         if (!timeStr) return 0;
         const [time, modifier] = timeStr.split(" ");
@@ -86,14 +88,25 @@ const AllProducts = () => {
                             text: `You have upvoted ${name}`,
                             icon: "success"
                         });
+                        refetch()
                     })
-                refetch()
             }
         } catch (error) {
             console.log(error);
         } finally {
             setLoading(false)
         }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 500)
+    }, [pageNumber, search, sortOrder])
+    if (loading) {
+        return <div className='min-h-screen flex justify-center items-center'>
+            <span className="loading loading-bars loading-lg"></span>
+        </div>
     }
     return (
         <div className=' px-4 sm:px-6 lg:px-8'>
@@ -176,7 +189,9 @@ const AllProducts = () => {
                         <select
                             className="px-4 py-2 border rounded-lg"
                             value={sortOrder}
-                            onChange={(e) => setSortOrder(e.target.value)}
+                            onChange={(e) => {
+                                setSortOrder(e.target.value)
+                            }}
                         >
                             <option value="desc">Highest Upvotes</option>
                             <option value="asc">Lowest Upvotes</option>
@@ -184,7 +199,14 @@ const AllProducts = () => {
                     </div>
                 </div>
             </div>
-            <ul className="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {updatedProducts.length === 0 ? (<div>
+                <div
+                    className="boxShadow p-6 sm:px-20 sm:py-14 flex items-center justify-center flex-col gap-[4px] rounded-xl">
+                    <Lottie animationData={noData} loop={true} className='w-[200px]' />
+                    <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Products to Show...</h1>
+                    <p className="text-[0.9rem] text-gray-500">No Products available right now!!</p>
+                </div>
+            </div>) : (<ul className="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {updatedProducts.map((product) => (
                     <a key={product._id} className="group block">
                         <img
@@ -220,14 +242,14 @@ const AllProducts = () => {
                                             icon: "warning"
                                         });
                                     }} />) : (<button onClick={() => handleUpvote(product._id, product.name)} className="text-gray-600 hover:text-blue-500">▲</button>)}
-                                    <span className="font-medium cursor-pointer">{product.upvoteCounts}</span>
+                                    <span className="font-medium cursor-pointer dark:text-gray-400">{product.upvoteCounts}</span>
                                 </button>
                             </p>
                         </div>
                     </a>
                 ))}
-            </ul>
-            <div className='flex justify-center mt-10 items-center gap-5 dark:bg-gray-800 bg-white p-2 shadow-lg rounded-md w-fit mx-auto select-none'>
+            </ul>)}
+            {updatedProducts.length === 0 ? "" : (<div className='flex justify-center mt-10 items-center gap-5 dark:bg-gray-800 bg-white p-2 shadow-lg rounded-md w-fit mx-auto select-none'>
                 {/* left arrow */}
                 <div onClick={() => { updatePageNumber(pageNumber - 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
                     PREV
@@ -241,7 +263,7 @@ const AllProducts = () => {
                 <div onClick={() => { updatePageNumber(pageNumber + 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
                     NEXT
                 </div>
-            </div>
+            </div>)}
         </div>
 
     )

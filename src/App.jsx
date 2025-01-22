@@ -19,6 +19,7 @@ import Statistics from './dashboard/Statistics';
 import ManageUsers from './dashboard/ManageUsers';
 import UpdateProduct from './pages/UpdateProduct';
 import AllProducts from './pages/AllProducts';
+import Error404 from './pages/Error404';
 
 
 
@@ -85,6 +86,18 @@ function App() {
         >
 
           <AllProducts />
+
+        </motion.div>
+        } />
+        <Route path="*" element={<motion.div
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+        >
+
+          <Error404 />
 
         </motion.div>
         } />
