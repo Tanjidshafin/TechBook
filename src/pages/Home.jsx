@@ -4,6 +4,7 @@ import Featured from '../components/Featured'
 import { Helmet } from 'react-helmet-async'
 import Trending from '../components/Trending'
 import Pricing from '../components/Pricing'
+import CouponShower from '../components/CouponShower'
 
 const Home = () => {
 
@@ -16,6 +17,7 @@ const Home = () => {
             <Banner />
             <Featured />
             <Trending />
+            <CouponShower />
             <Pricing />
         </div>
     )

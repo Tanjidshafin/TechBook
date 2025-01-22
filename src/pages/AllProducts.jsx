@@ -212,7 +212,7 @@ const AllProducts = () => {
                         <img
                             src={product.mainImage ? product.mainImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"}
                             alt=""
-                            className="w-full object-cover sm:h-[450px]"
+                            className="w-full h-[200px] object-cover md:h-[350px] sm:h-[300px]"
                         />
 
                         <div className="mt-3 flex justify-between text-sm">

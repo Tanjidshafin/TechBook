@@ -21,6 +21,7 @@ import UpdateProduct from './pages/UpdateProduct';
 import AllProducts from './pages/AllProducts';
 import Error404 from './pages/Error404';
 import Subscription from './components/Subscription';
+import ManageCoupons from './dashboard/ManageCoupons';
 
 
 
@@ -153,6 +154,11 @@ function App() {
           <Route path="manage-users" element={
             <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
               <ManageUsers />
+            </motion.div>
+          } />
+          <Route path="manage-coupons" element={
+            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+              <ManageCoupons />
             </motion.div>
           } />
         </Route>

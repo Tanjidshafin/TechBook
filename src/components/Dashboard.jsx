@@ -21,7 +21,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     useEffect(() => {
-        setTimeout(() => setLoading(false), 1000)
+        setTimeout(() => setLoading(false), 1500)
     })
     if (loading) {
         return <div className='min-h-screen flex justify-center items-center'>
@@ -148,7 +148,7 @@ const Dashboard = () => {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink className={({ isActive }) => `${isActive ? " text-gray-300 bg-gray-700" : ""}`
+                                    <NavLink to="/dashboard/manage-coupons" className={({ isActive }) => `${isActive ? " text-gray-300 bg-gray-700" : ""}`
 
                                     }>
                                         <RiCoupon2Line className="text-[1.5rem]  text-gray-400" />
@@ -158,7 +158,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="dropdown dropdown-left">
-                    <div tabIndex={0} role="button" className=" inline md:hidden">
+                    <div tabIndex={0} role="button" className=" inline lg:hidden">
                         <img
                             src={user.photoURL ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
                             alt="avatar" className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover" />
@@ -254,7 +254,7 @@ const Dashboard = () => {
                                 <FaUsers className="text-[1.5rem]  text-gray-400" />
                                 <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Users</span>
                             </NavLink>
-                            <NavLink className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
+                            <NavLink to="/dashboard/manage-coupons" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
 
                             }>
                                 <RiCoupon2Line className="text-[1.5rem]  text-gray-400" />
