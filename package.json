@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.5.0",
     "@tanstack/react-query": "^5.64.1",
     "animate.css": "^4.1.1",
     "axios": "^1.7.9",
@@ -30,6 +32,7 @@
     "react-star-ratings": "^2.3.0",
     "react-typed": "^2.0.12",
     "recharts": "^2.15.0",
+    "stripe": "^17.5.0",
     "sweetalert2": "^11.15.10",
     "swiper": "^11.2.1"
   },

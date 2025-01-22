@@ -4,14 +4,19 @@ import AxiosPublic from '../context/AxiosPublic';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
 import UseProducts from '../hooks/UseProducts';
+import IsSubscription from '../hooks/IsSubscription';
+import UseAcceptedProduct from '../hooks/UseAcceptedProduct';
 
 const AddProduct = () => {
+    const [isSubscription] = IsSubscription()
+    const [acceptedProducts] = UseAcceptedProduct()
     const { user } = useContext(AppContext)
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const AxiosLink = AxiosPublic()
     const date = new Date()
     const [, productRefetched] = UseProducts()
+    const searchedProduct = acceptedProducts.find(product => product?.email === user?.email)
     const [formData, setFormData] = useState({
         name: '',
         tags: ['', '', ''],
@@ -69,16 +74,37 @@ const AddProduct = () => {
         e.preventDefault();
         try {
             setLoading(true)
-            await AxiosLink.post("/add-products", formData)
-                .then(res => {
+            if (isSubscription) {
+                await AxiosLink.post("/add-products", formData)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Your Product is Added",
+                            text: "Waiting for the moderator to accept your product. ",
+                            icon: "success"
+                        });
+                    })
+                navigate("/dashboard/my-products")
+                productRefetched()
+            } else {
+                if (!searchedProduct) {
+                    await AxiosLink.post("/add-products", formData)
+                        .then(res => {
+                            Swal.fire({
+                                title: "Your Product is Added",
+                                text: "Waiting for the moderator to accept your product. ",
+                                icon: "success"
+                            });
+                        })
+                    navigate("/dashboard/my-products")
+                    productRefetched()
+                } else {
                     Swal.fire({
-                        title: "Your Product is Added",
-                        text: "Waiting for the moderator to accept your product. ",
-                        icon: "success"
+                        title: "Limit Exceeded",
+                        text: "Product Posting limit exceeded, Please purchase premium membership to post unlimited products",
+                        icon: "warning"
                     });
-                })
-            navigate("/dashboard/my-products")
-            productRefetched()
+                }
+            }
         } catch (error) {
             console.log(error);
         } finally {

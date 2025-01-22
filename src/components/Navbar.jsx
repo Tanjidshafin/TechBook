@@ -10,7 +10,9 @@ import { TbLogout2 } from "react-icons/tb";
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase.init';
 import Swal from 'sweetalert2';
+import IsSubscription from '../hooks/IsSubscription';
 const Navbar = () => {
+    const [isSubscription] = IsSubscription()
     const { user, toggleDarkMode } = useContext(AppContext)
     const [accountMenuOpen, setAccountMenuOpen] = useState(false)
     //logout
@@ -126,19 +128,26 @@ const Navbar = () => {
                             </div>
 
                             <div
-                                className={`${accountMenuOpen ? "block" : "hidden"} bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
-                                <NavLink to="/dashboard/my-profile" className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                                className={`${accountMenuOpen ? "translate-y-0 opacity-100 z-[1]" : "-translate-y-[250px] hidden opacity-0 z-[-1]"} bg-white dark:bg-gray-800 w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
+                                <NavLink to="/dashboard/my-profile" className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] dark:text-gray-400 text-gray-600 hover:bg-gray-50">
                                     <FiUser />
                                     {user.displayName}
                                 </NavLink>
-                                <NavLink to="/dashboard/my-products" className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                                <NavLink to="/dashboard/my-products" className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] dark:text-gray-400 text-gray-600 hover:bg-gray-50">
                                     <MdDashboard />
                                     Dashboard
                                 </NavLink>
-                                <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
-                                    <CiNoWaitingSign />
-                                    Membership Status
-                                </p>
+                                {isSubscription ? (<p className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-green-600 bg-green-100 hover:bg-green-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Verified
+                                </p>) : (<p className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-red-600 bg-red-100 hover:bg-red-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Not Verified
+                                </p>)}
                                 <div className="mt-3 border-t border-gray-200 pt-[5px]">
                                     <button onClick={handleLogout} className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
                                         <TbLogout2 />

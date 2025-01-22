@@ -20,6 +20,7 @@ import ManageUsers from './dashboard/ManageUsers';
 import UpdateProduct from './pages/UpdateProduct';
 import AllProducts from './pages/AllProducts';
 import Error404 from './pages/Error404';
+import Subscription from './components/Subscription';
 
 
 
@@ -98,6 +99,18 @@ function App() {
         >
 
           <Error404 />
+
+        </motion.div>
+        } />
+        <Route path="/subscription" element={<motion.div
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+        >
+
+          <Subscription />
 
         </motion.div>
         } />

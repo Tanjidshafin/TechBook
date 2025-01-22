@@ -23,7 +23,7 @@ const AppContextProvider = (props) => {
             if (user) {
                 localStorage.setItem("user", JSON.stringify(user))
                 const userEmail = {
-                    email: user.email
+                    email: user?.email
                 }
                 if (user) {
                     AxiosLink.post("/jwt", userEmail)

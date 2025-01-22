@@ -17,7 +17,7 @@ import IsModerator from '../hooks/IsModerator';
 const Dashboard = () => {
     const [isAdmin] = IsAdmin()
     const [isModerator] = IsModerator()
-    const { user, toggleDarkMode } = useContext(AppContext)
+    const { user } = useContext(AppContext)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     useEffect(() => {
