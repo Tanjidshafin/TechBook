@@ -18,21 +18,24 @@ const AllProducts = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     //search from backend
-    const handleSearch = e => {
-        e.preventDefault()
-        setSearch(e.target.search.value)
-        refetch()
-    }
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.search.value);
+    };
+
     //pagination 
     const [pageNumber, setPageNumber] = useState(0)
-    const { data: products = [], refetch } = useQuery({
+    const { data: products = [], isFetching, refetch } = useQuery({
         queryKey: ["products", pageNumber, search, sortOrder],
         queryFn: async () => {
-            const res = await AxiosLink.get(`/products/accepted?sort=${sortOrder}&search=${search}&page=${pageNumber}&limit=${productsPerPage}`)
-            return res.data
-        }
+            const res = await AxiosLink.get(
+                `/products/accepted?sort=${sortOrder}&search=${search}&page=${pageNumber}&limit=${productsPerPage}`
+            );
+            return res.data;
+        },
+        keepPreviousData: true,
+    });
 
-    })
     const productsPerPage = 8
     let page = 0
     if (!search) {
@@ -44,11 +47,14 @@ const AllProducts = () => {
         if ((num > (page - 1)) || (0 > num)) { return setPageNumber(0) }
         setPageNumber(num)
     }
-    const updatedProducts = products?.sort((a, b) => {
-        const timeA = parseTime(a.time);
-        const timeB = parseTime(b.time);
-        return timeA - timeB;
-    })
+    const updatedProducts = React.useMemo(() => {
+        return products.sort((a, b) => {
+            const timeA = parseTime(a.time);
+            const timeB = parseTime(b.time);
+            return timeA - timeB;
+        });
+    }, [products]);
+
 
 
     function parseTime(timeStr) {
@@ -97,17 +103,14 @@ const AllProducts = () => {
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 500)
-    }, [pageNumber, search, sortOrder])
-    if (loading) {
-        return <div className='min-h-screen flex justify-center items-center'>
-            <span className="loading loading-bars loading-lg"></span>
-        </div>
+    if (isFetching && products.length === 0) {
+        return (
+            <div className="min-h-screen flex justify-center items-center">
+                <span className="loading loading-bars loading-lg"></span>
+            </div>
+        );
     }
+
     return (
         <div className=' px-4 sm:px-6 lg:px-8'>
             <section

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 const AxiosPublic = () => {
     const navigate = useNavigate()
     const AxiosLink = axios.create({
-        baseURL: 'http://localhost:5000/'
+        baseURL: 'https://project-backend-drab.vercel.app/'
     });
     AxiosLink.interceptors.request.use(function (config) {
         const token = localStorage.getItem("token")

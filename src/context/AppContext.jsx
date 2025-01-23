@@ -4,6 +4,7 @@ import { auth } from "../../firebase.init";
 import { useLocation } from "react-router";
 import AxiosPublic from "./AxiosPublic";
 import Swal from "sweetalert2";
+import { ThreeDots } from "react-loader-spinner";
 
 export const AppContext = createContext();
 const AppContextProvider = (props) => {
@@ -12,38 +13,39 @@ const AppContextProvider = (props) => {
     const location = useLocation()
     const date = new Date()
     const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem("user");
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
     //window Scroll top
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [location.pathname])
     //user saved
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                localStorage.setItem("user", JSON.stringify(user))
-                const userEmail = {
-                    email: user?.email
-                }
-                if (user) {
-                    AxiosLink.post("/jwt", userEmail)
-                        .then(res => {
-                            setUser(user)
-                            localStorage.setItem("token", res.data.token)
-                        })
-                } else {
-                    setUser(null)
-                    localStorage.removeItem("token")
-                }
-                setLoading(false)
+                localStorage.setItem("user", JSON.stringify(user));
+                const userEmail = { email: user?.email };
+                AxiosLink.post("/jwt", userEmail)
+                    .then((res) => {
+                        setUser(user);
+                        localStorage.setItem("token", res.data.token);
+                    })
+                    .catch(() => {
+                        setUser(null);
+                        localStorage.removeItem("token");
+                    })
+                    .finally(() => setLoading(false));
+            } else {
+                setUser(null);
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                setLoading(false);
             }
-            else {
-                setUser(null)
-                localStorage.removeItem("user")
-            }
-        })
-        return unsubscribe
-    }, [location.pathname])
+        });
+        return unsubscribe;
+    }, [location.pathname]);
     //dark mode
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedMode = localStorage.getItem('darkMode');
@@ -131,8 +133,21 @@ const AppContextProvider = (props) => {
                 setUser(res.user)
             })
     }
-
-    const value = { googleSignIn, user, registerUser, loginUser,toggleDarkMode }
+    if (loading) {
+        return <div className="min-h-screen flex justify-center items-center">
+            <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+            />
+        </div>;
+    }
+    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode }
     return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
 }
 export default AppContextProvider;

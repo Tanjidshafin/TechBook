@@ -67,8 +67,8 @@ const Navbar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li><a>Home</a></li>
-                            <li><a>Products</a></li>
+                            <li><NavLink to="/">Home</NavLink></li>
+                            <li><NavLink to="/products">Products</NavLink></li>
                         </ul>
                     </div>
                     <a className="flex items-center gap-2 font-bold dark:text-gray-300 text-gray-700  text-xl md:text-3xl">

@@ -8,7 +8,7 @@ const UseProductsTrending = () => {
     const { data: Trendingproducts = [], refetch } = useQuery({
         queryKey: ['Trendingproducts'],
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/products/trending")
+            const res = await AxiosLink.get("/products/trending")
             return res.data
         }
     })

@@ -79,7 +79,7 @@ const Featured = () => {
                     <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Products to Show...</h1>
                     <p className="text-[0.9rem] text-gray-500">Be the first to add the first product.</p>
                 </div>
-            </div>) : (<div className='mt-5 md:grid md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            </div>) : (<div className='mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {FeaturedProducts.map((product) => (
                     <a key={product._id} className="group block">
                         <img

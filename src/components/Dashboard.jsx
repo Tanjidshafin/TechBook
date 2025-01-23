@@ -64,11 +64,11 @@ const Dashboard = () => {
     }
     return (
         <div className="flex flex-col lg:flex-row  md:gap-10">
-            <div className='flex items-center px-4 sm:px-6 lg:px-8 mt-2 lg:hidden'>
-                <div className="drawer">
+            <div className='flex items-center justify-between px-4 sm:px-6 lg:px-8 mt-2 lg:hidden'>
+                <div className="drawer w-1/2">
                     <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                     <div className="drawer-content">
-                        <label htmlFor="my-drawer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8 p-1 dark:bg-gray-300 dark:text-gray-800 bg-gray-700 rounded-full text-white">
+                        <label htmlFor="my-drawer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 p-1 dark:bg-gray-300 dark:text-gray-800 bg-gray-700 rounded-full text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                         </svg>
                         </label>
@@ -161,7 +161,7 @@ const Dashboard = () => {
                     <div tabIndex={0} role="button" className=" inline lg:hidden">
                         <img
                             src={user.photoURL ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
-                            alt="avatar" className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover" />
+                            alt="avatar" className="w-[40px] h-[40px] cursor-pointer rounded-full object-cover" />
                     </div>
                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                         <li><NavLink to="/dashboard/my-profile"> <RiAccountCircleLine />

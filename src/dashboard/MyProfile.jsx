@@ -11,11 +11,10 @@ const MyProfile = () => {
   const [isSubscription] = IsSubscription();
   const navigate = useNavigate()
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-gray-800 mt-10">My Profile</h1>
-
-      <div className="flex justify-center items-center mt-10 w-full px-4 md:px-0">
-        <div className="bg-white shadow-lg p-8 md:p-12 rounded-xl flex items-center flex-col max-w-lg w-full">
+    <div className="min-h-screen flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-300 mt-10">My Profile</h1>
+      <div className="flex justify-center items-center mt-10 w-full px-2 md:px-0">
+        <div className="bg-white dark:bg-gray-800 shadow-lg p-8 md:p-12 rounded-xl flex items-center flex-col max-w-lg w-full">
           <img
             src={
               user.photoURL ||
@@ -25,10 +24,10 @@ const MyProfile = () => {
             className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full shadow-md"
           />
 
-          <h2 className="text-2xl font-semibold text-gray-800 mt-4">
+          <h2 className="text-2xl text-center font-semibold dark:text-gray-300 text-gray-800 mt-4">
             {user.displayName}
           </h2>
-          <p className="text-gray-600 text-sm">{user.email}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-center text-sm">{user.email}</p>
 
           <div className="mt-6 w-full text-center">
             {isSubscription ? (
@@ -75,20 +74,17 @@ const MyProfile = () => {
           </p>
 
           <div className="flex items-center justify-between w-full mt-6 gap-4">
-            <button disabled className="flex items-center btn gap-2 justify-center w-1/2 bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700">
+            <button disabled className="flex items-center btn gap-2 justify-center h-[4rem] w-1/2 bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700">
               <MdOutlineEdit className="text-lg" />
-              Not Available
+              <span className="hidden sm:block">Not Available</span>
             </button>
             <button onClick={() => {
               navigate("/subscription")
-            }} disabled={isSubscription} className="flex items-center gap-2 btn justify-center w-1/2 bg-green-600 text-white py-2 px-4 rounded-lg shadow hover:bg-green-700">
+            }} disabled={isSubscription} className="flex items-center gap-2 btn h-[4rem] justify-center w-1/2 bg-green-600 text-white py-2 px-4 rounded-lg shadow hover:bg-green-700">
               <BiSolidPurchaseTag className="text-lg" />
-              {isSubscription ? "Purchased" : "Purchase"}
+              <span className="hidden sm:block">{isSubscription ? "Bought" : "Purchase"}</span>
             </button>
           </div>
-
-          <FaQuoteLeft className="text-gray-300 text-4xl absolute -top-8 -left-8" />
-          <FaQuoteRight className="text-gray-300 text-4xl absolute -bottom-8 -right-8" />
         </div>
       </div>
     </div>

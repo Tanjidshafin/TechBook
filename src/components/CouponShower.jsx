@@ -2,11 +2,9 @@ import React from 'react'
 import PageStarter from '../hooks/PageStarter'
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import AxiosPublic from '../context/AxiosPublic';
 import UseCoupons from '../hooks/UseCoupons';
 const CouponShower = () => {
     const [coupons] = UseCoupons()
-    console.log(coupons);
     return (
         <div>
             <header className='mt-10'>

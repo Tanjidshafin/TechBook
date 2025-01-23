@@ -6,6 +6,7 @@ import noData from "../assets/No_ data.json"
 import AxiosPublic from '../context/AxiosPublic'
 import Swal from 'sweetalert2'
 import { NavLink } from 'react-router'
+import { MdDeleteForever } from "react-icons/md";
 const MyProducts = () => {
   const { user } = useContext(AppContext)
   const [loading, setLoading] = useState(false)
@@ -19,23 +20,11 @@ const MyProducts = () => {
         .then(res => {
           if (status !== "rejected") {
             Swal.fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your Product has been deleted.",
-                  icon: "success"
-                });
-                productRefetched()
-              }
+              title: "Deleted!",
+              text: "Your Product has been deleted.",
+              icon: "success"
             });
+            productRefetched()
           } else {
             Swal.fire({
               title: "Deleted!",
@@ -86,17 +75,20 @@ const MyProducts = () => {
                   <td className="border border-gray-300 dark:border-gray-600 text-sm md:text-md px-4 py-2">
                     <NavLink to={`/updateUser/${product._id}`}
 
-                      className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+                      className="bg-blue-500 btn text-white px-3 py-1 rounded-md hover:bg-blue-600"
                     >
-                      Update
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+
                     </NavLink>
                   </td>
                   <td className="border border-gray-300 dark:border-gray-600 text-sm md:text-md px-4 py-2">
                     <button
                       onClick={() => handleDelete(product._id, product.status)}
-                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                      className="bg-red-500 btn text-white px-3 py-1 rounded-md hover:bg-red-600"
                     >
-                      Delete
+                      <MdDeleteForever className='text-[1.5rem]' />
                     </button>
                   </td>
                 </tr>

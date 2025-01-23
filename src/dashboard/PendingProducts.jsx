@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import Lottie from 'lottie-react'
 import noData from "../assets/No_ data.json"
 import { NavLink } from 'react-router'
-
+import { FcAcceptDatabase } from "react-icons/fc";
 const PendingProducts = () => {
   const [products, productRefetched] = UseProducts()
   const AxiosLink = AxiosPublic()
@@ -17,23 +17,11 @@ const PendingProducts = () => {
       await AxiosLink.patch(`/accepted-product/${id}`)
         .then(res => {
           Swal.fire({
-            title: "Are you sure?",
-            text: "You want to accept the Product",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, accept it!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "Accepted",
-                text: "Product has been accepted",
-                icon: "success"
-              });
-              productRefetched()
-            }
+            title: "Accepted",
+            text: "Product has been accepted",
+            icon: "success"
           });
+          productRefetched()
         })
     } catch (err) {
       console.log(err);
@@ -47,23 +35,11 @@ const PendingProducts = () => {
       await AxiosLink.patch(`/rejected-product/${id}`)
         .then(res => {
           Swal.fire({
-            title: "Are you sure?",
-            text: "You want to reject the Product",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, reject it!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "Rejected",
-                text: "Product has been rejected",
-                icon: "success"
-              });
-              productRefetched()
-            }
+            title: "Rejected",
+            text: "Product has been rejected",
+            icon: "success"
           });
+          productRefetched()
         })
     } catch (err) {
       console.log(err);
@@ -77,23 +53,11 @@ const PendingProducts = () => {
       await AxiosLink.patch(`/featured/${id}`)
         .then(res => {
           Swal.fire({
-            title: "Are you sure?",
-            text: "You want to make the product featured",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "Featured",
-                text: "Product has been Featured",
-                icon: "success"
-              });
-              productRefetched()
-            }
+            title: "Featured",
+            text: "Product has been Featured",
+            icon: "success"
           });
+          productRefetched()
         })
     } catch (err) {
       console.log(err);
@@ -118,7 +82,7 @@ const PendingProducts = () => {
               <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Accept</th>
               <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Reject</th>
               <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Featured</th>
-              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Action</th>
+              <th className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2 text-left">Details</th>
             </tr>
           </thead >
           <tbody>
@@ -136,28 +100,34 @@ const PendingProducts = () => {
                   <button onClick={() => handleAccepted(product._id)}
                     className="px-3 btn py-1 rounded text-white bg-green-500 hover:bg-green-600"
                   >
-                    Accept
+                    <FcAcceptDatabase className='text-[1.5rem]' />
                   </button>
                 </td>
                 <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <button onClick={() => handleRejected(product._id)}
                     className="px-3 py-1 btn rounded text-white bg-red-500 hover:bg-red-600"
                   >
-                    Reject
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                      <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clipRule="evenodd" />
+                    </svg>
+
                   </button>
                 </td>
                 <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <button disabled={product.speciality === "featured"} onClick={() => handleFeatured(product._id)}
                     className="px-3 btn py-1 rounded text-white bg-red-500 hover:bg-red-600"
                   >
-                    Make Featured
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                      <path fillRule="evenodd" d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z" clipRule="evenodd" />
+                    </svg>
+
                   </button>
                 </td>
                 <td className="border border-gray-300 text-sm md:text-md dark:border-gray-600 px-4 py-2">
                   <NavLink to={`/product/${product._id}`}
                     className="px-3 btn py-1 rounded text-white bg-yellow-500 hover:bg-yellow-600"
                   >
-                    View Details
+                    <FcAcceptDatabase  className='text-[1.5rem]'/>
                   </NavLink>
                 </td>
               </tr>
