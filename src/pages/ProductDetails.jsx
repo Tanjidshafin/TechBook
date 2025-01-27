@@ -6,7 +6,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import AxiosPublic from '../context/AxiosPublic';
 import { useParams } from 'react-router';
 import { IoIosAlert } from "react-icons/io";
-import { FaCaretUp } from "react-icons/fa6";
+import { FaCaretUp, FaGithub } from "react-icons/fa6";
 import { ReactTyped } from "react-typed";
 import { FaStar } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
@@ -14,6 +14,9 @@ import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import IsAdmin from '../hooks/IsAdmin';
+import { FaTwitter } from "react-icons/fa";
+import { IoNavigate } from 'react-icons/io5';
+import { Bars } from 'react-loader-spinner';
 export default function ProductDetails() {
     const AxiosLink = AxiosPublic()
     const { id } = useParams()
@@ -138,13 +141,24 @@ export default function ProductDetails() {
                         icon: "success"
                     });
                     console.log(res);
-                   
+
                 })
         } catch (Error) {
             console.log(Error);
         } finally {
             setLoading(false)
         }
+    }
+    if (product.length === 0) {
+        return <div className='min-h-screen flex justify-center items-center'><Bars
+            height="80"
+            width="80"
+            color="#ced4da"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+        /></div>
     }
     return (
         <div className="px-4 py-8 max-w-7xl mx-auto">
@@ -174,14 +188,14 @@ export default function ProductDetails() {
                         <div>
                             <h3 className="font-medium mb-2">External Links</h3>
                             <ul>
-                                <li>
-                                    Website: {product.externalLinks?.website ? (<a className='underline text-blue-400' href={product.externalLinks?.website} target='_blank'>{product.externalLinks?.website}</a>) : ("Not Available Now")}
+                                <li className='flex items-center gap-2'>
+                                    <span><IoNavigate /></span> <span>{product.externalLinks?.website ? (<a className='underline text-blue-400' href={product.externalLinks?.website} target='_blank'>{product.externalLinks?.website}</a>) : ("Not Available Now")}</span>
                                 </li>
-                                <li>
-                                    Github: {product.externalLinks?.github ? (<a className='underline text-blue-400' href={product.externalLinks?.github} target='_blank'>{product.externalLinks?.github}</a>) : ("Not Available Now")}
+                                <li className='flex items-center gap-2'>
+                                    <span><FaGithub /></span> <span>{product.externalLinks?.github ? (<a className='underline text-blue-400' href={product.externalLinks?.github} target='_blank'>{product.externalLinks?.github}</a>) : ("Not Available Now")}</span>
                                 </li>
-                                <li>
-                                    Twitter: {product.externalLinks?.twitter ? (<a className='underline text-blue-400' href={product.externalLinks?.twitter} target='_blank'>{product.externalLinks?.twitter}</a>) : ("Not Available Now")}
+                                <li className='flex items-center gap-2'>
+                                    <span><FaTwitter /></span> <span>{product.externalLinks?.twitter ? (<a className='underline text-blue-400' href={product.externalLinks?.twitter} target='_blank'>{product.externalLinks?.twitter}</a>) : ("Not Available Now")}</span>
                                 </li>
                             </ul>
                         </div>

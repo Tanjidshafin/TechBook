@@ -97,7 +97,7 @@ const UpdateProduct = () => {
     };
 
     return (
-        <div className="p-6">
+        <div className="pt-6">
             <div className="text-center mb-2 text-amber-600 mt-20 text-sm">---What's new?---</div>
             <h1 className="text-center text-2xl font-semibold mb-8">UPDATE AN ITEM</h1>
             <div className="flex flex-col-reverse lg:flex-row gap-5 justify-between items-center">

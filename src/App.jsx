@@ -8,7 +8,7 @@ import Signup from './auth/Signup';
 import Private from './auth/Private';
 import ProductDetails from './pages/ProductDetails';
 import Dashboard from './components/Dashboard';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './context/AppContext';
 import MyProfile from './dashboard/MyProfile';
 import MyProducts from './dashboard/MyProducts';
@@ -22,19 +22,74 @@ import AllProducts from './pages/AllProducts';
 import Error404 from './pages/Error404';
 import Subscription from './components/Subscription';
 import ManageCoupons from './dashboard/ManageCoupons';
-
-
+import AnimatedCursor from "react-animated-cursor"
+import Lenis from '@studio-freight/lenis';
 
 function App() {
-  const location = useLocation()
+  const [showCursor, setShowCursor] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      direction: 'vertical',
+      smooth: true,
+    });
+
+    const animate = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+
+    const handleResize = () => {
+      const isLargeScreen = window.innerWidth >= 1024;
+      setShowCursor(isLargeScreen);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      lenis.destroy();
+    };
+  }, []);
+
   const pageVariants = {
     initial: { opacity: 0, x: -100 },
     animate: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: 100 },
   };
+
   return (
     <div className='max-w-screen-2xl mx-auto'>
-
+      <div className="App">
+        {showCursor && (<AnimatedCursor
+          innerSize={10}
+          outerSize={40}
+          innerScale={1.5}
+          outerScale={2.5}
+          outerAlpha={0.2}
+          hasBlendMode={false}
+          innerStyle={{
+            backgroundColor: '#00bcd4',
+            borderRadius: '50%',
+            boxShadow: '0 0 10px rgba(0, 188, 212, 0.8)',
+            position: "fixed",
+            zIndex: 2000
+          }}
+          outerStyle={{
+            border: '2px solid #00bcd4',
+            borderRadius: '50%',
+            boxShadow: '0 0 20px rgba(0, 188, 212, 0.5)',
+            position: "fixed",
+            zIndex: 2000
+          }}
+        />)}
+      </div>
       {location.pathname.startsWith("/dashboard") ? "" : (<Navbar />)}
       <Routes>
         <Route path="/" element={<motion.div

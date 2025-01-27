@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { Navigate, useLocation } from 'react-router'
+import { Bars } from 'react-loader-spinner'
 
 const Private = ({ children }) => {
     const location = useLocation()
@@ -9,12 +10,18 @@ const Private = ({ children }) => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 2000)
+        }, 200)
     }, [])
     if (loading) {
-        return <div className='min-h-screen flex justify-center items-center'>
-            <div className="w-10 h-10 flex gap-2 items-center justify-center"><div className="w-2 h-5 animate-[ping_1.4s_linear_infinite] bg-sky-600"></div><div className="w-2 h-5 animate-[ping_1.8s_linear_infinite] bg-sky-600"></div><div className="w-2 h-5 animate-[ping_2s_linear_infinite] bg-sky-600"></div></div>
-        </div>
+        return <div className='min-h-screen flex justify-center items-center'><Bars
+            height="80"
+            width="80"
+            color="#ced4da"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+        /></div>
     }
     if (user) {
         return children

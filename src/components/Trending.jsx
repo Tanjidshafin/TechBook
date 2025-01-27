@@ -9,6 +9,7 @@ import noData from "../assets/No_ data.json"
 import Lottie from 'lottie-react'
 import { AppContext } from '../context/AppContext'
 import { MdDoNotDisturbAlt } from "react-icons/md";
+import { motion } from "framer-motion";
 const Trending = () => {
     const { user } = useContext(AppContext)
     const navigate = useNavigate()
@@ -50,6 +51,20 @@ const Trending = () => {
             setLoading(false)
         }
     }
+    // card aniamtion
+    const containerVariants = {
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+        hidden: { opacity: 0 },
+    };
+    const cardVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
     return (
         <div className='mt-20 px-4 sm:px-6 lg:px-8'>
             <PageStarter title="Trending Products" subTitle="Discover top-rated tech innovations in our Featured Products section. Explore cutting-edge tools, software, and apps handpicked for you." />
@@ -60,16 +75,19 @@ const Trending = () => {
                     <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Products to Show...</h1>
                     <p className="text-[0.9rem] text-gray-500">Be the first to add the first product.</p>
                 </div>
-            </div>) : (<div className='mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            </div>) : (<motion.div initial="hidden"
+                animate="visible"
+                variants={containerVariants} className='mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {Trendingproducts.map((product) => (
-                    <a key={product._id} className="group block">
+                    <motion.a key={product._id} variants={cardVariants}
+                        transition={{ duration: 0.5, ease: "easeOut" }} className="group shadow-2xl rounded-xl py-4 px-3 block">
                         <img
                             src={product.mainImage ? product.mainImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"}
                             alt=""
-                            className="w-full h-[200px] object-cover sm:h-[300px] md:h-[350px]"
+                            className="w-full rounded-sm h-[200px] object-cover md:h-[350px] sm:h-[300px]"
                         />
 
-                        <div className="mt-3 flex justify-between text-sm">
+                        <div className="pt-3 flex justify-between text-sm">
                             <div>
                                 <div>
                                     <NavLink to={`/product/${product._id}`} className="text-gray-900 dark:text-gray-400 group-hover:underline group-hover:underline-offset-4">
@@ -89,7 +107,7 @@ const Trending = () => {
 
                             <p className="text-gray-900">
                                 <button className="flex items-center gap-1">
-                                    {user?.email === product.email ? (<MdDoNotDisturbAlt onClick={() => {
+                                    {user?.email === product.email ? (<MdDoNotDisturbAlt className='dark:text-gray-400' onClick={() => {
                                         Swal.fire({
                                             title: "Cant Upvote",
                                             text: "You Cant upvote your own posted product!!!",
@@ -100,9 +118,9 @@ const Trending = () => {
                                 </button>
                             </p>
                         </div>
-                    </a>
+                    </motion.a>
                 ))}
-            </div>)
+            </motion.div>)
             }
             <NavLink to="/products" className="flex justify-center md:justify-end mt-5">
                 <AwesomeButton type="secondary">All Products</AwesomeButton>

@@ -9,6 +9,8 @@ import { IoSearch } from 'react-icons/io5';
 import { useQuery } from '@tanstack/react-query'
 import Lottie from 'lottie-react'
 import noData from '../assets/No_ data.json'
+import { motion } from "framer-motion";
+import { Bars } from 'react-loader-spinner'
 const AllProducts = () => {
     const { user } = useContext(AppContext)
     const [acceptedProducts] = UseAcceptedProduct()
@@ -35,7 +37,9 @@ const AllProducts = () => {
         },
         keepPreviousData: true,
     });
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pageNumber, search, sortOrder])
     const productsPerPage = 8
     let page = 0
     if (!search) {
@@ -54,7 +58,20 @@ const AllProducts = () => {
             return timeA - timeB;
         });
     }, [products]);
-
+    // card aniamtion
+    const containerVariants = {
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+        hidden: { opacity: 0 },
+    };
+    const cardVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
 
 
     function parseTime(timeStr) {
@@ -106,13 +123,21 @@ const AllProducts = () => {
     if (isFetching && products.length === 0) {
         return (
             <div className="min-h-screen flex justify-center items-center">
-                <span className="loading loading-bars loading-lg"></span>
+                <Bars
+                    height="80"
+                    width="80"
+                    color="#ced4da"
+                    ariaLabel="bars-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                />
             </div>
         );
     }
 
     return (
-        <div className=' px-4 sm:px-6 lg:px-8'>
+        <div>
             <section
                 className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover mb-10 bg-center bg-fixed bg-no-repeat"
             >
@@ -132,7 +157,7 @@ const AllProducts = () => {
                     </div>
                 </div>
             </section>
-            <header className="text-center">
+            <header className="text-center px-4 sm:px-6 lg:px-8">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-gray-400 sm:text-3xl">Discover Innovative Tech Projects</h2>
 
                 <p className="mx-auto mt-4 max-w-5xl p-2 text-xs sm:text-sm md:text-md text-gray-500">
@@ -209,49 +234,79 @@ const AllProducts = () => {
                     <h1 className="text-[1.4rem] mt-6 font-[500] text-black dark:text-gray-300">No Products to Show...</h1>
                     <p className="text-[0.9rem] text-gray-500">No Products available right now!!</p>
                 </div>
-            </div>) : (<ul className="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            </div>) : (<motion.ul
+                className="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+            >
                 {updatedProducts.map((product) => (
-                    <a key={product._id} className="group block">
+                    <motion.a
+                        key={product._id}
+                        className="group shadow-2xl rounded-xl py-4 px-3 block"
+                        variants={cardVariants}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
                         <img
-                            src={product.mainImage ? product.mainImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"}
+                            src={
+                                product.mainImage
+                                    ? product.mainImage
+                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"
+                            }
                             alt=""
-                            className="w-full h-[200px] object-cover md:h-[350px] sm:h-[300px]"
+                            className="w-full rounded-sm h-[200px] object-cover md:h-[350px] sm:h-[300px]"
                         />
-
-                        <div className="mt-3 flex justify-between text-sm">
+                        <div className="pt-3 flex justify-between text-sm">
                             <div>
                                 <div>
-                                    <NavLink to={`/product/${product._id}`} className="text-gray-900 dark:text-gray-400 group-hover:underline group-hover:underline-offset-4">
+                                    <NavLink
+                                        to={`/product/${product._id}`}
+                                        className="text-gray-900 dark:text-gray-400 group-hover:underline group-hover:underline-offset-4"
+                                    >
                                         {product.name}
                                     </NavLink>
                                     <p className="mt-1.5 text-pretty text-xs text-gray-500">
                                         {product.time}
                                     </p>
                                 </div>
-
-                                <div className='hidden sm:flex  flex-wrap gap-2'>
-                                    {product.tags.map(tag => (<p className="mt-1.5 text-pretty text-xs text-gray-500">
-                                        {tag}
-                                    </p>))}
+                                <div className="hidden sm:flex flex-wrap gap-2">
+                                    {product.tags.map((tag, index) => (
+                                        <p key={index} className="mt-1.5 text-pretty text-xs text-gray-500">
+                                            {tag}
+                                        </p>
+                                    ))}
                                 </div>
                             </div>
-
                             <p className="text-gray-900">
                                 <button className="flex items-center gap-1">
-                                    {user?.email === product.email ? (<MdDoNotDisturbAlt onClick={() => {
-                                        Swal.fire({
-                                            title: "Cant Upvote",
-                                            text: "You Cant upvote your own posted product!!!",
-                                            icon: "warning"
-                                        });
-                                    }} />) : (<button onClick={() => handleUpvote(product._id, product.name)} className="text-gray-600 hover:text-blue-500">▲</button>)}
-                                    <span className="font-medium cursor-pointer dark:text-gray-400">{product.upvoteCounts}</span>
+                                    {user?.email === product.email ? (
+                                        <MdDoNotDisturbAlt
+                                            className="dark:text-gray-400"
+                                            onClick={() => {
+                                                Swal.fire({
+                                                    title: "Can't Upvote",
+                                                    text: "You can't upvote your own posted product!",
+                                                    icon: "warning",
+                                                });
+                                            }}
+                                        />
+                                    ) : (
+                                        <button
+                                            onClick={() => handleUpvote(product._id, product.name)}
+                                            className="text-gray-600 hover:text-blue-500"
+                                        >
+                                            ▲
+                                        </button>
+                                    )}
+                                    <span className="font-medium cursor-pointer dark:text-gray-400">
+                                        {product.upvoteCounts}
+                                    </span>
                                 </button>
                             </p>
                         </div>
-                    </a>
+                    </motion.a>
                 ))}
-            </ul>)}
+            </motion.ul>)}
             {updatedProducts.length === 0 ? "" : (<div className='flex justify-center mt-10 items-center gap-5 dark:bg-gray-800 bg-white p-2 shadow-lg rounded-md w-fit mx-auto select-none'>
                 {/* left arrow */}
                 <div onClick={() => { updatePageNumber(pageNumber - 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
