@@ -49,12 +49,6 @@ Techbook is your ultimate destination to discover, share, and explore the latest
 - **Integrated Payment System**
   - Unlock premium features or enjoy additional facilities through seamless paid subscriptions.
 
-## 🚀 Getting Started
-
-<details>
-<summary>Click to expand</summary>
----
-
 ## 📦 **Dependencies**
   
 🔹 **Frontend Dependencies:**  
