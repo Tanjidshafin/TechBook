@@ -109,4 +109,45 @@ npm start
 ```
   
 The project should now be running at **http://localhost:3000/** 🚀  
- 📢 **Contributing** 🛠️ **We welcome contributions!** If you'd like to improve Techbook: 1. **Fork the repository** 2. **Create a feature branch** 3. **Commit your changes** 4. **Submit a pull request** Every contribution is highly appreciated! 💙 --- ## 📜 **License** This project is licensed under the **MIT License**. See the [`LICENSE`](./LICENSE) file for details. --- ## 🌎 **Stay Connected** <div align="center"> <a href="https://www.linkedin.com/in/tanjid-karim-shafin-835365249/" target="_blank"> <img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"> </a> <a href="mailto:tanjidshafin1234@gmail.com"> <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"> </a> <a href="https://techbook-shafin.netlify.app/" target="_blank"> <img src="https://img.shields.io/badge/🌐 Live Website-Techbook-green?style=for-the-badge" alt="Portfolio"> </a> </div> --- 💻 **Start exploring Techbook today and be part of a growing tech-savvy community!** 🚀 ``` 
+
+---
+
+## 📢 Contributing  
+
+🛠️ **We welcome contributions!** If you'd like to improve Techbook:  
+
+1. **Fork the repository**  
+2. **Create a feature branch**  
+3. **Commit your changes**  
+4. **Submit a pull request**  
+
+Every contribution is highly appreciated! 💙  
+
+---
+
+## 📜 License  
+
+This project is licensed under the **MIT License**. See the [`LICENSE`](./LICENSE) file for details.  
+
+---
+
+## 🌎 Stay Connected  
+
+<div align="center">
+  <a href="https://www.linkedin.com/in/tanjid-karim-shafin-835365249/" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  
+  <a href="mailto:tanjidshafin1234@gmail.com">
+    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
+  </a>
+  
+  <a href="https://techbook-shafin.netlify.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐 Live Website-Techbook-green?style=for-the-badge" alt="Portfolio">
+  </a>
+</div>
+
+---
+
+💻 **Start exploring Techbook today and be part of a growing tech-savvy community!** 🚀  
+
