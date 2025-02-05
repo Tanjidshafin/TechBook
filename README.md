@@ -1,80 +1,60 @@
+I'll modify the README to remove the GIFs from the features section and use the banner image you provided. Here's the updated version:
 
-
+```markdown
 <div align="center">
-  <img src="https://i.ibb.co.com/3530qTZ7/desktop.png" width="100%"/>
-  <br>
-  <h1 align="center">🚀 Techbook</h1>
-  <h3 align="center">The ultimate destination to discover, share, and explore cutting-edge tech products.</h3>
-  <br>
-  
-  <a href="https://techbook-shafin.netlify.app/" target="_blank">
-    <img src="https://img.shields.io/badge/🌍 Live Demo-Techbook-green?style=for-the-badge" alt="Live Demo">
+  <img src="https://i.ibb.co/3530qTZ7/desktop.png" alt="Techbook Banner" width="100%"/>
+
+  <h1>Techbook</h1>
+  <p><em>Discover | Share | Innovate</em></p>
+
+  <a href="https://techbook-shafin.netlify.app/">
+    <img src="https://img.shields.io/badge/Visit-Techbook-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" alt="Visit Techbook"/>
   </a>
-  <a href="https://github.com/yourusername/techbook" target="_blank">
-    <img src="https://img.shields.io/badge/📂 Repository-GitHub-blue?style=for-the-badge" alt="GitHub Repo">
-  </a>
-  <img src="https://img.shields.io/github/license/yourusername/techbook?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" alt="Version 1.0.0"/>
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="MIT License"/>
 </div>
 
----
+## 🌟 About Techbook
 
-## ✨ Overview  
+Techbook is your ultimate destination to discover, share, and explore the latest tech products. Whether it's Web Apps, AI tools, Software, Games, or Mobile Apps, Techbook connects innovators with tech enthusiasts. Start your journey today and uncover groundbreaking products to elevate your tech experience.
 
-🔹 **Techbook** is a dynamic **tech discovery platform** where users can explore, share, and engage with the **latest Web Apps, AI tools, Software, Games, and Mobile Apps**. Designed for tech enthusiasts, it enables seamless product discovery, interactive voting, and insightful reviews.  
+## 🛠️ Tech Stack
 
-⚡ **Key Benefits:**  
-✔️ Explore & share cutting-edge tech products.  
-✔️ Engage with a tech-savvy community through voting & reviews.  
-✔️ Secure authentication & role-based access control.  
-✔️ Moderation system for quality content.  
-✔️ Integrated **payment system** for premium features.  
+<div align="center">
 
----
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
 
-## 🎥 **Demo Preview**
-  
-<p align="center">
-  <img src="https://i.ibb.co.com/3530qTZ7/desktop.png" width="90%">
-</p>
+</div>
 
----
+## 🌈 Key Features
 
-## 🌟 **Core Features**  
+- **Discover & Share Tech Products**
+  - Browse through a wide array of Web Apps, AI tools, Software, Games, and Mobile Apps.
+  - Submit your tech product ideas and share them with the world.
 
-✅ **Discover & Share Tech Products**  
-   - Browse Web Apps, AI tools, Software, Games, and Mobile Apps.  
-   - Submit and share your tech product ideas globally.  
+- **Upvote, Downvote & Review Products**
+  - Engage with the community by upvoting or downvoting tech products.
+  - Post detailed reviews to share your experience and insights.
 
-✅ **Vote & Review Products**  
-   - Upvote/downvote products based on popularity.  
-   - Write detailed reviews to help others.  
+- **User Authentication & Role Management**
+  - Secure login system with roles for normal users, moderators, and admins.
+  - Moderators and admins ensure a high-quality product discovery experience.
 
-✅ **User Authentication & Role Management**  
-   - Secure login via Firebase Authentication.  
-   - User roles: **User, Moderator, Admin** with different permissions.  
+- **Product Moderation System**
+  - Keep the platform clean and relevant with an efficient product approval process managed by moderators and admins.
 
-✅ **Product Moderation System**  
-   - Ensures a high-quality experience by approving only relevant products.  
+- **Integrated Payment System**
+  - Unlock premium features or enjoy additional facilities through seamless paid subscriptions.
 
-✅ **Integrated Payment System**  
-   - **Stripe (or similar service)** integration for premium features & subscriptions.  
+## 🚀 Getting Started
 
----
-
-## 🛠️ **Tech Stack**
-  
-### 🔹 **Frontend:**  
-<img src="https://skillicons.dev/icons?i=react,tailwind" />
-
-### 🔹 **Backend:**  
-<img src="https://skillicons.dev/icons?i=nodejs,mongodb" />
-
-### 🔹 **Authentication:**  
-<img src="https://skillicons.dev/icons?i=firebase" />
-
-### 🔹 **Deployment & Payment:**  
-<img src="https://skillicons.dev/icons?i=netlify,stripe" />
-
+<details>
+<summary>Click to expand</summary>
 ---
 
 ## 📦 **Dependencies**
