@@ -61,26 +61,25 @@ Techbook is not just a platform; it's a vibrant ecosystem where tech enthusiasts
   </tr>
 </table>
 
+
 ## 🧰 Built with Precision
 
 <details>
-<summary><strong>🎨 Frontend Artistry</strong></summary>
+<summary><strong>🎨 Frontend Artistry & ⚙️ Backend Powerhouse</strong></summary>
 
 ```json
 {
-  "react": "^18.2.0",
-  "tailwindcss": "^3.2.4",
-  "react-router-dom": "^6.4.3"
-}
-```
-
-`</details>``<details>
-<summary><strong>⚙️ Backend Powerhouse</strong></summary>````json
-{
-  "express": "^4.18.2",
-  "mongoose": "^6.6.5",
-  "firebase-admin": "^11.3.0",
-  "stripe": "^9.0.0"
+  "frontend": {
+    "react": "^18.2.0",
+    "tailwindcss": "^3.2.4",
+    "react-router-dom": "^6.4.3"
+  },
+  "backend": {
+    "express": "^4.18.2",
+    "mongoose": "^6.6.5",
+    "firebase-admin": "^11.3.0",
+    "stripe": "^9.0.0"
+  }
 }
 ```
 
@@ -155,19 +154,17 @@ Techbook thrives under the **MIT License**. Dive into [`LICENSE`](./LICENSE) for
 
 ## 🌐 Connect with the Visionary
 
-<div align="center">
+`<div align="center">
   <a href="https://www.linkedin.com/in/tanjid-karim-shafin-835365249/" target="_blank">
     <img src="https://img.shields.io/badge/Connect-LinkedIn-0077B5?style=for-the-badge&logo=linkedin" alt="LinkedIn">
-  </a>
-  <a href="mailto:tanjidshafin1234@gmail.com">
+  </a>``  <a href="mailto:tanjidshafin1234@gmail.com">
     <img src="https://img.shields.io/badge/Email-Innovator-D14836?style=for-the-badge&logo=gmail" alt="Email">
-  </a> 
-  <a href="https://techbook-shafin.netlify.app/" target="_blank">
+  </a>``  <a href="https://techbook-shafin.netlify.app/" target="_blank">
     <img src="https://img.shields.io/badge/Explore-Techbook-00C7B7?style=for-the-badge&logo=netlify" alt="Techbook">
   </a>
-</div>
----
+</div>`---
 
-<div align="center">
+`<div align="center">
   <strong>🚀 Dive into Techbook - Where Your Tech Journey Begins! 🌟</strong>
 </div>
+
