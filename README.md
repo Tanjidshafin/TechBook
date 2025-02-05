@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://i.ibb.co/3530qTZ7/desktop.png" alt="Techbook Banner" width="100%"/>
+  <img src="https://i.ibb.co/3530qTZ7/desktop.png" alt="Techbook Banner" width="100%" height="400"/>
 
   <h1>Techbook</h1>
   <p><em>Discover | Share | Innovate</em></p>
