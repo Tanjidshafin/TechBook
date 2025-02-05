@@ -62,29 +62,23 @@ Techbook is not just a platform; it's a vibrant ecosystem where tech enthusiasts
 </table>
 
 
-## 🧰 Built with Precision
+## 🧰 Built with Precision  
 
-<details>
+<details>  
+<summary><strong>🎨 Frontend Artistry & ⚙️ Backend Powerhouse</strong></summary>  
 
-<strong>🎨 Frontend Artistry & ⚙️ Backend Powerhouse</strong>
+| 🏗️ Stack      | 📦 Package               | 🔢 Version  |  
+|--------------|-------------------------|------------|  
+| **Frontend** | React                   | `^18.2.0`  |  
+|              | Tailwind CSS             | `^3.2.4`   |  
+|              | React Router DOM         | `^6.4.3`   |  
+| **Backend**  | Express                  | `^4.18.2`  |  
+|              | Mongoose                 | `^6.6.5`   |  
+|              | Firebase Admin           | `^11.3.0`  |  
+|              | Stripe                   | `^9.0.0`   |  
 
-```json
-{
-  "frontend": {
-    "react": "^18.2.0",
-    "tailwindcss": "^3.2.4",
-    "react-router-dom": "^6.4.3"
-  },
-  "backend": {
-    "express": "^4.18.2",
-    "mongoose": "^6.6.5",
-    "firebase-admin": "^11.3.0",
-    "stripe": "^9.0.0"
-  }
-}
-```
+</details>  
 
-</details>
 
 ## 🚀 Embark on Your Techbook Journey
 
