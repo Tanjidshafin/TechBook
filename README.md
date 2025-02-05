@@ -172,6 +172,6 @@ Techbook thrives under the **MIT License**. Dive into [`LICENSE`](./LICENSE) for
 <div align="center">
   <strong>🚀 Dive into Techbook - Where Your Tech Journey Begins! 🌟</strong>
 </div>
-```
+
 
 
