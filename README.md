@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://i.ibb.co/3530qTZ7/desktop.png" alt="Techbook Banner" width="100%"/>
+  <img src="[https://i.ibb.co/3530qTZ7/desktop.png](https://i.ibb.co.com/RGBWb6tv/Screenshot-2025-02-01-194151.png)" alt="Techbook Banner" width="100%"/>
 
   <h1>Techbook</h1>
   <p><em>Discover | Share | Innovate</em></p>
