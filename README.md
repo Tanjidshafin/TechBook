@@ -1,8 +1,5 @@
-Here's an **eye-catching, unique, and well-structured** **README** for your project **Techbook** with enhanced **design, animations, and step-by-step guidance!** 🚀  
 
----
 
-```md
 <div align="center">
   <img src="https://i.ibb.co.com/3530qTZ7/desktop.png" width="100%"/>
   <br>
