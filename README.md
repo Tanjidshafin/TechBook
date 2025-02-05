@@ -1,6 +1,4 @@
-I'll modify the README to remove the GIFs from the features section and use the banner image you provided. Here's the updated version:
 
-```markdown
 <div align="center">
   <img src="https://i.ibb.co/3530qTZ7/desktop.png" alt="Techbook Banner" width="100%"/>
 
