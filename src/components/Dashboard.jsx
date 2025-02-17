@@ -18,19 +18,8 @@ const Dashboard = () => {
     const [isAdmin] = IsAdmin()
     const [isModerator] = IsModerator()
     const { user } = useContext(AppContext)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    useEffect(() => {
-        setTimeout(() => setLoading(false), 1500)
-    })
-    if (loading) {
-        return <div className='min-h-screen flex justify-center items-center'>
-            <div className="w-10 h-10 flex gap-2 items-center justify-center"><div className="w-2 h-5 animate-[ping_1.4s_linear_infinite] bg-sky-600"></div><div className="w-2 h-5 animate-[ping_1.8s_linear_infinite] bg-sky-600"></div><div className="w-2 h-5 animate-[ping_2s_linear_infinite] bg-sky-600"></div></div>
-        </div>
-    }
-    if (!user) {
-        return <div>Please Reload Again</div>
-    }
     const handleLogout = async () => {
         try {
             setLoading(true)

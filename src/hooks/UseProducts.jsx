@@ -4,7 +4,7 @@ import AxiosPublic from '../context/AxiosPublic'
 
 const UseProducts = () => {
     const AxiosLink = AxiosPublic()
-    const { data: products = [], refetch: productRefetched } = useQuery({
+    const { data: products = [], refetch: productRefetched, isFetching } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const res = await AxiosLink.get("/products")
@@ -12,7 +12,7 @@ const UseProducts = () => {
         }
 
     })
-    return [products, productRefetched]
+    return [products, productRefetched, isFetching]
 }
 
 export default UseProducts

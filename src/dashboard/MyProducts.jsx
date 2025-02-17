@@ -7,11 +7,12 @@ import AxiosPublic from '../context/AxiosPublic'
 import Swal from 'sweetalert2'
 import { NavLink } from 'react-router'
 import { MdDeleteForever } from "react-icons/md";
+import { Bars } from 'react-loader-spinner'
 const MyProducts = () => {
   const { user } = useContext(AppContext)
   const [loading, setLoading] = useState(false)
   const AxiosLink = AxiosPublic()
-  const [products, productRefetched] = UseProducts()
+  const [products, productRefetched, isFetching] = UseProducts()
   const ownProducts = products.filter(product => product.email === user.email)
   const handleDelete = async (id, status) => {
     try {
@@ -39,6 +40,17 @@ const MyProducts = () => {
     } finally {
       setLoading(false)
     }
+  }
+  if (isFetching) {
+    return <div className='min-h-screen flex justify-center items-center'><Bars
+      height="80"
+      width="80"
+      color="#ced4da"
+      ariaLabel="bars-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    /></div>
   }
   return (
     <div>

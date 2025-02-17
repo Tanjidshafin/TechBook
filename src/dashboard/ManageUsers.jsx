@@ -4,10 +4,11 @@ import ManageUserData from '../hooks/ManageUserData'
 import Lottie from 'lottie-react'
 import noData from "../assets/No_ data.json"
 import Swal from 'sweetalert2'
+import { Bars } from 'react-loader-spinner'
 const ManageUsers = () => {
     const AxiosLink = AxiosPublic()
     const [loading, setLoading] = useState(false)
-    const [users, usersRefetched] = ManageUserData()
+    const [users, usersRefetched, isFetching] = ManageUserData()
     const makeModerator = (id, name) => {
         try {
             setLoading(true)
@@ -92,6 +93,17 @@ const ManageUsers = () => {
         } finally {
             setLoading(false)
         }
+    }
+    if (isFetching) {
+        return <div className='min-h-screen flex justify-center items-center'><Bars
+            height="80"
+            width="80"
+            color="#ced4da"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+        /></div>
     }
     return (
         <div>

@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import AxiosPublic from "./AxiosPublic";
 import Swal from "sweetalert2";
 import { ThreeDots } from "react-loader-spinner";
+import axios from "axios";
 
 export const AppContext = createContext();
 const AppContextProvider = (props) => {
@@ -17,6 +18,7 @@ const AppContextProvider = (props) => {
         const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
+    const [total, setTotal] = useState(0)
     //window Scroll top
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -133,6 +135,11 @@ const AppContextProvider = (props) => {
                 setUser(res.user)
             })
     }
+    //fetch total
+    useEffect(() => {
+        AxiosLink.get("/total")
+            .then(res => setTotal(res.data.result))
+    },[location.pathname])
     if (loading) {
         return <div className="min-h-screen flex justify-center items-center">
             <ThreeDots
@@ -147,7 +154,7 @@ const AppContextProvider = (props) => {
             />
         </div>;
     }
-    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode }
+    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode, total }
     return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
 }
 export default AppContextProvider;

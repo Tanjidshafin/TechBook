@@ -12,7 +12,7 @@ import noData from '../assets/No_ data.json'
 import { motion } from "framer-motion";
 import { Bars } from 'react-loader-spinner'
 const AllProducts = () => {
-    const { user } = useContext(AppContext)
+    const { user, total } = useContext(AppContext)
     const [acceptedProducts] = UseAcceptedProduct()
     const AxiosLink = AxiosPublic()
     const [search, setSearch] = useState("")
@@ -41,16 +41,20 @@ const AllProducts = () => {
         window.scrollTo(0, 0)
     }, [pageNumber, search, sortOrder])
     const productsPerPage = 8
-    let page = 0
-    if (!search) {
-        page = Math.ceil(acceptedProducts.length / productsPerPage)
-    } else {
-        page = Math.ceil(products.length / productsPerPage)
-    }
+    useEffect(() => {
+        if (search && products.length < productsPerPage) {
+            setPageNumber(0);
+        }
+    }, [search, products]);
+    const page = search ? Math.ceil(products.length / productsPerPage) : Math.ceil(total / productsPerPage);
     const updatePageNumber = (num) => {
-        if ((num > (page - 1)) || (0 > num)) { return setPageNumber(0) }
-        setPageNumber(num)
-    }
+        if (num < 0 || num >= page || (search && products.length < productsPerPage && num > 0)) {
+            return;
+        }
+        setPageNumber(num);
+    };
+
+
     const updatedProducts = React.useMemo(() => {
         return products.sort((a, b) => {
             const timeA = parseTime(a.time);
@@ -120,7 +124,7 @@ const AllProducts = () => {
             setLoading(false)
         }
     }
-    if (isFetching && products.length === 0) {
+    if (isFetching) {
         return (
             <div className="min-h-screen flex justify-center items-center">
                 <Bars
@@ -164,7 +168,7 @@ const AllProducts = () => {
                     Explore a curated collection of the latest tech projects shared by creators worldwide. From cutting-edge AI tools to unique software solutions and exciting games, find inspiration, upvote your favorites, and leave your reviews. Join the community and be part of the innovation! Let me know if you’d like adjustments to match the tone or specifics of your platform. 😊
                 </p>
             </header>
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-8 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 <div className="rounded border hidden md:flex border-gray-100">
                     <button
                         className="inline-flex size-10 items-center justify-center border-e text-gray-600 transition hover:bg-gray-50 hover:text-gray-700"
@@ -235,7 +239,7 @@ const AllProducts = () => {
                     <p className="text-[0.9rem] text-gray-500">No Products available right now!!</p>
                 </div>
             </div>) : (<motion.ul
-                className="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                className="mt-4 px-4 sm:px-6 lg:px-8 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
@@ -254,7 +258,7 @@ const AllProducts = () => {
                                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9oh_xT4XzP_RhI_kwLBe6fOprEig0e76jQ&s"
                             }
                             alt=""
-                            className="w-full rounded-sm h-[200px] object-cover md:h-[350px] sm:h-[300px]"
+                            className="w-full rounded-sm h-[150px] object-cover md:h-[350px] sm:h-[300px]"
                         />
                         <div className="pt-3 flex justify-between text-sm">
                             <div>

@@ -185,16 +185,16 @@ export default function ProductDetails() {
                     </div>
 
                     <div className="space-y-4">
-                        <div>
+                        <div className='w-full'>
                             <h3 className="font-medium mb-2">External Links</h3>
                             <ul>
-                                <li className='flex items-center gap-2'>
+                                <li className='flex text-sm items-center gap-2'>
                                     <span><IoNavigate /></span> <span>{product.externalLinks?.website ? (<a className='underline text-blue-400' href={product.externalLinks?.website} target='_blank'>{product.externalLinks?.website}</a>) : ("Not Available Now")}</span>
                                 </li>
-                                <li className='flex items-center gap-2'>
+                                <li className='flex text-sm items-center gap-2'>
                                     <span><FaGithub /></span> <span>{product.externalLinks?.github ? (<a className='underline text-blue-400' href={product.externalLinks?.github} target='_blank'>{product.externalLinks?.github}</a>) : ("Not Available Now")}</span>
                                 </li>
-                                <li className='flex items-center gap-2'>
+                                <li className='flex text-sm items-center gap-2'>
                                     <span><FaTwitter /></span> <span>{product.externalLinks?.twitter ? (<a className='underline text-blue-400' href={product.externalLinks?.twitter} target='_blank'>{product.externalLinks?.twitter}</a>) : ("Not Available Now")}</span>
                                 </li>
                             </ul>

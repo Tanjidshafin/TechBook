@@ -6,8 +6,9 @@ import Lottie from 'lottie-react'
 import noData from "../assets/No_ data.json"
 import { NavLink } from 'react-router'
 import { FcAcceptDatabase } from "react-icons/fc";
+import { Bars } from 'react-loader-spinner'
 const PendingProducts = () => {
-  const [products, productRefetched] = UseProducts()
+  const [products, productRefetched, isFetching] = UseProducts()
   const AxiosLink = AxiosPublic()
   const [loading, setLoading] = useState(false)
   const pendingProducts = products.filter(product => product.status === "pending")
@@ -64,6 +65,17 @@ const PendingProducts = () => {
     } finally {
       setLoading(false)
     }
+  }
+  if (isFetching) {
+    return <div className='min-h-screen flex justify-center items-center'><Bars
+      height="80"
+      width="80"
+      color="#ced4da"
+      ariaLabel="bars-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    /></div>
   }
   return (
     <div>
@@ -127,7 +139,7 @@ const PendingProducts = () => {
                   <NavLink to={`/product/${product._id}`}
                     className="px-3 btn py-1 rounded text-white bg-yellow-500 hover:bg-yellow-600"
                   >
-                    <FcAcceptDatabase  className='text-[1.5rem]'/>
+                    <FcAcceptDatabase className='text-[1.5rem]' />
                   </NavLink>
                 </td>
               </tr>

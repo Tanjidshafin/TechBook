@@ -7,8 +7,9 @@ import Swal from 'sweetalert2'
 import AxiosPublic from '../context/AxiosPublic'
 import UseProducts from '../hooks/UseProducts'
 import { CiViewList } from "react-icons/ci";
+import { Bars } from 'react-loader-spinner'
 const ReportedProducts = () => {
-  const [reportedProducts, reportedRefetched] = UseReported()
+  const [reportedProducts, reportedRefetched, isFetching] = UseReported()
   const [, productRefetched] = UseProducts()
   const [loading, setLoading] = useState(false)
   const AxiosLink = AxiosPublic()
@@ -35,7 +36,17 @@ const ReportedProducts = () => {
       setLoading(false);
     }
   };
-
+  if (isFetching) {
+    return <div className='min-h-screen flex justify-center items-center'><Bars
+      height="80"
+      width="80"
+      color="#ced4da"
+      ariaLabel="bars-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    /></div>
+  }
   return (
     <div>
       <p className="text-3xl font-bold text-center mt-10">Reported Products</p>

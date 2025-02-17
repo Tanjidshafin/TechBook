@@ -22,7 +22,7 @@ import AllProducts from './pages/AllProducts';
 import Error404 from './pages/Error404';
 import Subscription from './components/Subscription';
 import ManageCoupons from './dashboard/ManageCoupons';
-import AnimatedCursor from "react-animated-cursor"
+
 import Lenis from '@studio-freight/lenis';
 
 function App() {
@@ -66,30 +66,7 @@ function App() {
 
   return (
     <div className='max-w-screen-2xl mx-auto'>
-      <div className="App">
-        {showCursor && (<AnimatedCursor
-          innerSize={10}
-          outerSize={40}
-          innerScale={1.5}
-          outerScale={2.5}
-          outerAlpha={0.2}
-          hasBlendMode={false}
-          innerStyle={{
-            backgroundColor: '#00bcd4',
-            borderRadius: '50%',
-            boxShadow: '0 0 10px rgba(0, 188, 212, 0.8)',
-            position: "fixed",
-            zIndex: 2000
-          }}
-          outerStyle={{
-            border: '2px solid #00bcd4',
-            borderRadius: '50%',
-            boxShadow: '0 0 20px rgba(0, 188, 212, 0.5)',
-            position: "fixed",
-            zIndex: 2000
-          }}
-        />)}
-      </div>
+     
       {location.pathname.startsWith("/dashboard") ? "" : (<Navbar />)}
       <Routes>
         <Route path="/" element={<motion.div

@@ -5,10 +5,11 @@ import UseCoupons from '../hooks/UseCoupons'
 import Lottie from 'lottie-react'
 import noData from "../assets/CouponLottie.json"
 import { RxCross1 } from "react-icons/rx";
+import { Bars } from 'react-loader-spinner'
 const ManageCoupons = () => {
     const [addCoupon, setaddCoupon] = useState(false);
     const AxiosLink = AxiosPublic()
-    const [coupons, couponsRefetched] = UseCoupons()
+    const [coupons, couponsRefetched, isFetching] = UseCoupons()
     const [loading, setLoading] = useState(false)
     const [coupon, setCoupon] = useState([])
     const [couponData, setCouponData] = useState({
@@ -109,6 +110,17 @@ const ManageCoupons = () => {
         } finally {
             setLoading(false)
         }
+    }
+    if (isFetching) {
+        return <div className='min-h-screen flex justify-center items-center'><Bars
+            height="80"
+            width="80"
+            color="#ced4da"
+            ariaLabel="bars-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+        /></div>
     }
     return (
         <div className='min-h-screen gap-10'>
