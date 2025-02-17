@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Route, Routes, useLocation } from 'react-router'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -8,8 +8,7 @@ import Signup from './auth/Signup';
 import Private from './auth/Private';
 import ProductDetails from './pages/ProductDetails';
 import Dashboard from './components/Dashboard';
-import { useContext, useEffect, useState } from 'react';
-import { AppContext } from './context/AppContext';
+import { useEffect, useState } from 'react';
 import MyProfile from './dashboard/MyProfile';
 import MyProducts from './dashboard/MyProducts';
 import AddProduct from './dashboard/AddProduct';
@@ -33,7 +32,7 @@ function App() {
     // Initialize Lenis
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       smooth: true,
     });
@@ -66,7 +65,7 @@ function App() {
 
   return (
     <div className='max-w-screen-2xl mx-auto'>
-     
+
       {location.pathname.startsWith("/dashboard") ? "" : (<Navbar />)}
       <Routes>
         <Route path="/" element={<motion.div

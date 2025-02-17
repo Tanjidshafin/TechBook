@@ -123,16 +123,17 @@ export default function ProductDetails() {
         }
 
     }
-    const reportedData = {
-        id: product._id,
-        name: product.name,
-        image: product.mainImage,
-        email: user.email,
-        speciality: product.speciality
-    }
+
     const handleReport = async () => {
         try {
             setLoading(true)
+            const reportedData = {
+                id: product._id,
+                name: product.name,
+                image: product.mainImage,
+                email: user.email,
+                speciality: product.speciality
+            }
             await AxiosLink.post("/add-reported-products", reportedData)
                 .then(res => {
                     Swal.fire({
