@@ -139,7 +139,7 @@ const AppContextProvider = (props) => {
     useEffect(() => {
         AxiosLink.get("/total")
             .then(res => setTotal(res.data.result))
-    },[location.pathname])
+    }, [location.pathname])
     if (loading) {
         return <div className="min-h-screen flex justify-center items-center">
             <ThreeDots
@@ -154,7 +154,7 @@ const AppContextProvider = (props) => {
             />
         </div>;
     }
-    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode, total }
+    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode, total, isDarkMode }
     return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
 }
 export default AppContextProvider;
