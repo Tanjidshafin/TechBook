@@ -162,7 +162,7 @@ const Navbar = () => {
                                             "https://cdn.vectorstock.com/i/500p/43/94/default-avatar-photo-placeholder-icon-grey-vector-38594394.jpg"
                                         }
                                         alt=""
-                                        className="w-10 h-10 rounded-full cursor-pointer object-cover ring-2 ring-indigo-500 dark:ring-indigo-400"
+                                        className="w-9 h-9 rounded-full cursor-pointer object-cover ring-2 ring-indigo-500 dark:ring-indigo-400"
                                     />
                                     <motion.div
                                         className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"
