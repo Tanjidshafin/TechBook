@@ -162,7 +162,7 @@ const AllProducts = () => {
                                 </NavLink>
                             ) : (
                                 <NavLink
-                                    to="/register"
+                                    to="/signup"
                                     className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-blue-600 shadow hover:text-blue-700 focus:outline-none focus:ring active:text-blue-500 sm:w-auto"
                                 >
                                     Get Started
@@ -199,7 +199,7 @@ const AllProducts = () => {
                         </div>
                     </form>
 
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center flex-wrap gap-3">
                         <select
                             className="p-2 text-sm border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                             value={sortOrder}
