@@ -95,7 +95,7 @@ const Navbar = () => {
 
     const ThemeIcon = () => (
         <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
-            {isDarkMode ? <FiMoon className="h-6 w-6 text-indigo-400" /> : <FiSun className="h-6 w-6 text-amber-500" />}
+            {isDarkMode ? <FiMoon className="h-6 w-6 text-blue-400" /> : <FiSun className="h-6 w-6 text-amber-500" />}
         </motion.div>
     )
 
@@ -162,7 +162,7 @@ const Navbar = () => {
                                             "https://cdn.vectorstock.com/i/500p/43/94/default-avatar-photo-placeholder-icon-grey-vector-38594394.jpg"
                                         }
                                         alt=""
-                                        className="w-9 h-9 rounded-full cursor-pointer object-cover ring-2 ring-indigo-500 dark:ring-indigo-400"
+                                        className="w-9 h-9 rounded-full cursor-pointer object-cover ring-2 ring-blue-500 dark:ring-blue-400"
                                     />
                                     <motion.div
                                         className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"
@@ -186,16 +186,16 @@ const Navbar = () => {
                                                     className="p-4 bg-gradient-to-r from-gray-600 to-gray-600 dark:from-gray-600 dark:to-gray-600"
                                                 >
                                                     <p className="text-white font-medium truncate">{user.displayName}</p>
-                                                    <p className="text-indigo-100 text-sm truncate">{user.email}</p>
+                                                    <p className="text-blue-100 text-sm truncate">{user.email}</p>
                                                 </motion.div>
 
                                                 <div className="p-2">
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
                                                             to="/dashboard/my-profile"
-                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors group"
+                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
-                                                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                                                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                                                 <FiUser className="w-4 h-4" />
                                                             </div>
                                                             <span className="ml-3">Profile</span>
@@ -205,7 +205,7 @@ const Navbar = () => {
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
                                                             to="/dashboard/my-products"
-                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors group"
+                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
                                                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform">
                                                                 <MdDashboard className="w-4 h-4" />
@@ -217,7 +217,7 @@ const Navbar = () => {
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
                                                             to="/settings"
-                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors group"
+                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
                                                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                                                 <FiSettings className="w-4 h-4" />
@@ -229,7 +229,7 @@ const Navbar = () => {
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
                                                             to="/help"
-                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors group"
+                                                            className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
                                                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-500 dark:text-teal-400 group-hover:scale-110 transition-transform">
                                                                 <FiHelpCircle className="w-4 h-4" />
@@ -359,7 +359,7 @@ const Navbar = () => {
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={({ isActive }) =>
                                             `block px-4 py-2 rounded-lg transition-colors ${isActive
-                                                ? "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400"
+                                                ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
                                                 : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                             }`
                                         }
@@ -371,7 +371,7 @@ const Navbar = () => {
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={({ isActive }) =>
                                             `block px-4 py-2 rounded-lg transition-colors ${isActive
-                                                ? "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400"
+                                                ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
                                                 : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                             }`
                                         }
