@@ -16,9 +16,8 @@ const Featured = () => {
     const { user } = useContext(AppContext)
     const navigate = useNavigate()
     const AxiosLink = AxiosPublic()
+    const [acceptedProducts, acceptedProductRefetched, acceptedLoading] = UseAcceptedProduct()
     const [loading, setLoading] = useState(false)
-    const [acceptedProducts, acceptedProductRefetched] = UseAcceptedProduct()
-
     const FeaturedProducts = acceptedProducts
         .filter((product) => product?.speciality === "featured")
         .sort((a, b) => {
@@ -86,7 +85,7 @@ const Featured = () => {
             {FeaturedProducts.length === 0 ? (
                 <NoProductsFound />
             ) : (
-                <ProductGrid products={FeaturedProducts} isLoading={loading} onUpvote={handleUpvote} user={user} />
+                <ProductGrid products={FeaturedProducts} isLoading={acceptedLoading} onUpvote={handleUpvote} user={user} />
             )}
             <div className="mt-8 flex justify-center md:justify-end">
                 <NavLink to="/products">

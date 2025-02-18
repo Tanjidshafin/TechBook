@@ -12,7 +12,6 @@ const ProductGrid = ({ products, isLoading, onUpvote, user }) => {
             },
         },
     }
-
     return (
         <motion.div
             variants={containerVariants}

@@ -154,7 +154,7 @@ const AppContextProvider = (props) => {
             />
         </div>;
     }
-    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode, total, isDarkMode }
+    const value = { googleSignIn, user, registerUser, loginUser, toggleDarkMode, total, isDarkMode, loading }
     return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
 }
 export default AppContextProvider;

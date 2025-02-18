@@ -1,300 +1,182 @@
-import React, { useEffect, useState } from 'react'
-import { FiBarChart, FiPieChart } from "react-icons/fi";
-import { RiAccountCircleLine } from "react-icons/ri";
-import { GoHome, GoProjectSymlink } from "react-icons/go";
-import { CiLogout } from "react-icons/ci";
-import { BsThreeDots } from "react-icons/bs";
-import { NavLink, Outlet, useNavigate } from 'react-router';
-import { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase.init';
-import { FaUsers } from "react-icons/fa6";
-import { RiCoupon2Line } from "react-icons/ri";
-import Swal from 'sweetalert2';
-import IsAdmin from '../hooks/IsAdmin';
-import IsModerator from '../hooks/IsModerator';
+"use client"
+
+import { useState, useContext } from "react"
+import { motion } from "framer-motion"
+import { NavLink, Outlet, useNavigate } from "react-router"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase.init"
+import Swal from "sweetalert2"
+import IsAdmin from "../hooks/IsAdmin"
+import IsModerator from "../hooks/IsModerator"
+import {
+    FiHome,
+    FiBox,
+    FiPlusSquare,
+    FiAlertTriangle,
+    FiClock,
+    FiPieChart,
+    FiUsers,
+    FiTag,
+    FiMenu,
+    FiX,
+    FiLogOut,
+    FiUser,
+} from "react-icons/fi"
+import { AppContext } from "../context/AppContext"
+
+
 const Dashboard = () => {
     const [isAdmin] = IsAdmin()
     const [isModerator] = IsModerator()
-    const { user } = useContext(AppContext)
-    const [loading, setLoading] = useState(false)
+    const { user, loading } = useContext(AppContext)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const navigate = useNavigate()
+
     const handleLogout = async () => {
         try {
-            setLoading(true)
-            Swal.fire({
+            const result = await Swal.fire({
                 title: "Are you sure?",
                 text: "You have to login again to access again!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Logout!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    signOut(auth)
-                        .then(res => {
-                            Swal.fire({
-                                title: "You have beeen logged out!",
-                                text: "Please Login Again, Thank You",
-                                icon: "success"
-                            });
-                            navigate("/login")
-                        })
-                }
-            });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false)
-        }
+                confirmButtonText: "Yes, Logout!",
+            })
 
+            if (result.isConfirmed) {
+                await signOut(auth)
+                await Swal.fire({
+                    title: "You have been logged out!",
+                    text: "Please Login Again, Thank You",
+                    icon: "success",
+                })
+                navigate("/login")
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const menuItems = [
+        { icon: FiHome, text: "Home", path: "/" },
+        { icon: FiBox, text: "My Products", path: "/dashboard/my-products" },
+        { icon: FiPlusSquare, text: "Add Product", path: "/dashboard/add-product" },
+        ...(isAdmin || isModerator
+            ? [
+                { icon: FiAlertTriangle, text: "Reported Products", path: "/dashboard/reported-products" },
+                { icon: FiClock, text: "Pending Products", path: "/dashboard/pending-products" },
+            ]
+            : []),
+        ...(isAdmin
+            ? [
+                { icon: FiPieChart, text: "Statistics", path: "/dashboard/statistics" },
+                { icon: FiUsers, text: "Manage Users", path: "/dashboard/manage-users" },
+                { icon: FiTag, text: "Manage Coupons", path: "/dashboard/manage-coupons" },
+            ]
+            : []),
+    ]
+    if (loading) {
+        return <div>loading...</div>
     }
     return (
-        <div className="flex flex-col lg:flex-row  md:gap-10">
-            <div className='flex items-center justify-between px-4 sm:px-6 lg:px-8 mt-2 lg:hidden'>
-                <div className="drawer w-1/2">
-                    <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-                    <div className="drawer-content">
-                        <label htmlFor="my-drawer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 p-1 dark:bg-gray-300 dark:text-gray-800 bg-gray-700 rounded-full text-white">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-                        </svg>
-                        </label>
-                    </div>
-                    <div className="drawer-side">
-                        <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                        <ul className="menu flex flex-col gap-5 bg-base-200 text-base-content min-h-full w-2- p-4">
-                            {/* Sidebar content here */}
-                            <li><NavLink to="/"> <GoHome className="text-[1.5rem]  text-gray-400" /></NavLink></li>
-                            <li>
-                                <NavLink to="/dashboard/my-products" className={({ isActive }) => ` ${isActive ? " text-gray-300 bg-gray-700" : ""} `
-
-                                }>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-400">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                    </svg>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/add-product" className={({ isActive }) => `${isActive ? " text-gray-300 bg-gray-700" : ""}`
-                                }>
-                                    <GoProjectSymlink className="text-[1.5rem]  text-gray-400" />
-                                </NavLink>
-                            </li>
-                            {isAdmin === true || isModerator === true ? (
-                                <>
-                                    <li>
-                                        <NavLink
-                                            to="/dashboard/reported-products"
-                                            className={({ isActive }) =>
-                                                `${isActive ? " text-gray-300 bg-gray-700" : ""
-                                                }`
-                                            }
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth={1.5}
-                                                stroke="currentColor"
-                                                className="size-6 text-gray-400"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                                                />
-                                            </svg>
-                                        </NavLink>
-
-                                    </li>
-                                    <li>
-                                        <NavLink
-                                            to="/dashboard/pending-products"
-                                            className={({ isActive }) =>
-                                                ` ${isActive ? " text-gray-300 bg-gray-700" : ""
-                                                }`
-                                            }
-                                        >
-                                            <FiBarChart className="text-[1.5rem]  text-gray-400" />
-                                        </NavLink>
-                                    </li>
-                                </>
-                            ) : null}
-                            {isAdmin ? (<><li>
-                                <NavLink to="/dashboard/statistics" className={({ isActive }) => ` ${isActive ? " text-gray-300 bg-gray-700" : ""}`
-
-                                }>
-                                    <FiPieChart className="text-[1.5rem]  text-gray-400" />
-                                </NavLink>
-                            </li>
-                                <li>
-                                    <NavLink to="/dashboard/manage-users" className={({ isActive }) => `${isActive ? " text-gray-300 bg-gray-700" : ""}`
-
-                                    }>
-                                        <FaUsers className="text-[1.5rem]  text-gray-400" />
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/manage-coupons" className={({ isActive }) => `${isActive ? " text-gray-300 bg-gray-700" : ""}`
-
-                                    }>
-                                        <RiCoupon2Line className="text-[1.5rem]  text-gray-400" />
-                                    </NavLink></li></>) : null}
-
-                        </ul>
+        <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+            <aside className="hidden lg:block w-64 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto">
+                <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+                    <div className="p-4">
+                        <h1 className="text-2xl font-bold text-white tracking-wider">TECHBOOK</h1>
                     </div>
                 </div>
-                <div className="dropdown dropdown-left">
-                    <div tabIndex={0} role="button" className=" inline lg:hidden">
-                        <img
-                            src={user.photoURL ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
-                            alt="avatar" className="w-[40px] h-[40px] cursor-pointer rounded-full object-cover" />
-                    </div>
-                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                        <li><NavLink to="/dashboard/my-profile"> <RiAccountCircleLine />
-                            Profile</NavLink></li>
-                        <li onClick={handleLogout}><a><CiLogout />
-                            Logout</a></li>
-                    </ul>
-                </div>
-
-            </div>
-            <aside className="bg-white hidden lg:block dark:bg-gray-800 boxShadow w-1/7 rounded-md transition-all duration-300 ease">
-                <div className="mt-5 px-4">
-
-                </div>
-                <div className="mt-6 px-4">
-                    <div className="mt-3 flex flex-row lg:flex-col gap-5">
-                        <NavLink to="/" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? "scale-150" : ""} p-[5px] rounded-md cursor-pointer`
-
-                        }>
-                            <GoHome className="text-[1.5rem]  text-gray-400" />
-                            <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Home</span>
+                <nav className="mt-5 px-2">
+                    {menuItems.map((item, index) => (
+                        <NavLink
+                            key={index}
+                            to={item.path}
+                            className={({ isActive }) =>
+                                `flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 ${isActive ? "bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400" : ""
+                                }`
+                            }
+                        >
+                            <item.icon className="h-5 w-5 mr-2" />
+                            <span>{item.text}</span>
                         </NavLink>
-                        <NavLink to="/dashboard/my-products" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                        }>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-400">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                            </svg>
-
-                            <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">My Products</span>
-                        </NavLink>
-                        <NavLink to="/dashboard/add-product" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                        }>
-                            <GoProjectSymlink className="text-[1.5rem]  text-gray-400" />
-                            <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Add Products</span>
-                        </NavLink>
-                        {isAdmin === true || isModerator === true ? (
-                            <>
-                                <NavLink
-                                    to="/dashboard/reported-products"
-                                    className={({ isActive }) =>
-                                        `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""
-                                        } p-[5px] rounded-md cursor-pointer`
-                                    }
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6 text-gray-400"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                                        />
-                                    </svg>
-                                    <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">
-                                        Reported Products
-                                    </span>
-                                </NavLink>
-
-                                <NavLink
-                                    to="/dashboard/pending-products"
-                                    className={({ isActive }) =>
-                                        `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""
-                                        } p-[5px] rounded-md cursor-pointer`
-                                    }
-                                >
-                                    <FiBarChart className="text-[1.5rem]  text-gray-400" />
-                                    <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">
-                                        Pending Products
-                                    </span>
-                                </NavLink>
-                            </>
-                        ) : null}
-
-                        {isAdmin ? (<><NavLink to="/dashboard/statistics" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                        }>
-                            <FiPieChart className="text-[1.5rem]  text-gray-400" />
-                            <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Statistics</span>
-                        </NavLink>
-                            <NavLink to="/dashboard/manage-users" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                            }>
-                                <FaUsers className="text-[1.5rem]  text-gray-400" />
-                                <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Users</span>
-                            </NavLink>
-                            <NavLink to="/dashboard/manage-coupons" className={({ isActive }) => `flex items-center w-full hover:bg-gray-50 ${isActive ? " text-gray-300 bg-gray-700" : ""} p-[5px] rounded-md cursor-pointer`
-
-                            }>
-                                <RiCoupon2Line className="text-[1.5rem]  text-gray-400" />
-                                <span className="hidden lg:inline ml-2 text-[1rem] font-[400] text-gray-400">Manage Coupons</span>
-                            </NavLink></>) : null}
-                    </div>
-                </div>
-                {/* Profile section */}
-                <div className="bg-gray-100 dark:bg-gray-700 py-3 px-4 flex items-center mt-10">
-                    <div className="flex items-center gap-[3px]">
-                        <img
-                            src={user.photoURL ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
-                            alt="" className="w-[30px] hidden lg:inline h-[30px] cursor-pointer rounded-full object-cover" />
-                        <div className="dropdown dropdown-bottom">
-                            <div tabIndex={0} role="button" className=" inline md:hidden">
-                                <img
-                                    src={user.photoURL ? user.photoURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"}
-                                    alt="avatar" className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover" />
-                            </div>
-                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                <li><NavLink to="/dashboard/my-profile"> <RiAccountCircleLine />
-                                    Profile</NavLink></li>
-                                <li onClick={handleLogout}><a><CiLogout />
-                                    Logout</a></li>
-                            </ul>
-                        </div>
-                        <h3 className="hidden lg:inline text-[0.9rem] text-gray-800 dark:text-gray-400 font-[500]">{user.displayName}</h3>
-
-                    </div>
-                    <div className="relative group ml-4">
-                        <BsThreeDots className="text-[1.2rem] hidden lg:inline text-gray-400 cursor-pointer" />
-                        <ul className="translate-y-[20px] opacity-0 z-[-1] group-hover:translate-y-0 group-hover:opacity-100 group-hover:z-30 absolute top-0 left-[30px] bg-white boxShadow transition-all duration-300 p-[8px] rounded-md flex flex-col gap-[3px]">
-                            <NavLink to="/dashboard/my-profile" className={({ isActive }) => `flex items-center gap-[7px] text-[0.9rem] dark:text-gray-300 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer`
-
-                            }>
-                                <RiAccountCircleLine />
-                                Profile
-                            </NavLink>
-                            <li onClick={handleLogout} className="flex items-center gap-[7px] text-[0.9rem] text-red-500 hover:bg-gray-50 px-[8px] py-[4px] rounded-md cursor-pointer">
-                                <CiLogout />
-                                Logout
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                    ))}
+                </nav>
             </aside>
-            <main className="lg:w-3/4 px-5">
-                <Outlet />
-            </main>
+            <motion.aside
+                initial={{ x: -300 }}
+                animate={{ x: isSidebarOpen ? 0 : -300 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto lg:hidden"
+            >
+                <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Techbook</h2>
+                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden">
+                        <FiX className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                    </button>
+                </div>
+                <nav className="mt-5 px-2">
+                    {menuItems.map((item, index) => (
+                        <NavLink
+                            key={index}
+                            to={item.path}
+                            className={({ isActive }) =>
+                                `flex items-center px-4 py-2 mt-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300 ${isActive ? "bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400" : ""
+                                }`
+                            }
+                            onClick={() => setIsSidebarOpen(false)}
+                        >
+                            <item.icon className="h-5 w-5 mr-2" />
+                            <span>{item.text}</span>
+                        </NavLink>
+                    ))}
+                </nav>
+            </motion.aside>
+            <div className="flex-1 flex flex-col overflow-hidden">
+                <header className="bg-white dark:bg-gray-800 shadow-sm">
+                    <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                        <button
+                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                            className="lg:hidden text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                        >
+                            <FiMenu className="h-6 w-6" />
+                        </button>
+                        <div className="flex items-center">
+                            <img
+                                src={user.photoURL || "https://via.placeholder.com/40"}
+                                alt="User avatar"
+                                className="h-8 w-8 rounded-full object-cover"
+                            />
+                            <span className="ml-3 font-medium text-gray-700 dark:text-gray-200">{user.displayName}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <NavLink
+                                to="/dashboard/my-profile"
+                                className="mr-4 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                            >
+                                <FiUser className="h-5 w-5" />
+                            </NavLink>
+                            <button
+                                onClick={handleLogout}
+                                className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400"
+                            >
+                                <FiLogOut className="h-5 w-5" />
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900">
+                    <div className="container mx-auto px-6 py-8">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                            <Outlet />
+                        </motion.div>
+                    </div>
+                </main>
+            </div>
         </div>
     )
 }
 
 export default Dashboard
+

@@ -142,7 +142,9 @@ function App() {
           transition={{ duration: 0.5 }}
         >
 
-          <Subscription />
+          <Private>
+            <Subscription />
+          </Private>
 
         </motion.div>
         } />

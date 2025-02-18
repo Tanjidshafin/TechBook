@@ -204,7 +204,7 @@ const Navbar = () => {
 
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
-                                                            to="/dashboard/my-products"
+                                                            to="/dashboard/statistics"
                                                             className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
                                                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform">
@@ -287,7 +287,13 @@ const Navbar = () => {
                             </div>
                         )}
 
-                        {/* Mobile Menu Button */}
+                        {user ? (
+                            <></>
+                        ) : (
+                            <NavLink to="/login">
+                                <AwesomeButton type="primary">Login</AwesomeButton>
+                            </NavLink>
+                        )}
                         <div className="lg:hidden">
                             <motion.button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -307,17 +313,9 @@ const Navbar = () => {
                             </motion.button>
                         </div>
 
-                        {user ? (
-                            <></>
-                        ) : (
-                            <NavLink to="/login">
-                                <AwesomeButton type="primary">Login</AwesomeButton>
-                            </NavLink>
-                        )}
                     </div>
                 </div>
             </div>
-            {/* Mobile Menu Sidebar */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <>
@@ -333,7 +331,7 @@ const Navbar = () => {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 20 }}
-                            className="fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-800 shadow-xl"
+                            className="fixed top-0 right-0 z-[1000] h-full w-64 bg-white dark:bg-gray-800 shadow-xl"
                         >
                             <div className="p-4 space-y-4">
                                 <div className="flex justify-between items-center">

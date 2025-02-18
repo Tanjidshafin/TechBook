@@ -15,7 +15,7 @@ import ProductGrid from "./ProductCardGrid"
 const Trending = () => {
     const { user } = useContext(AppContext)
     const navigate = useNavigate()
-    const [Trendingproducts, refetch] = UseProductsTrending()
+    const [Trendingproducts, refetch, trendingLoading] = UseProductsTrending()
     const AxiosLink = AxiosPublic()
     const [loading, setLoading] = useState(false)
 
@@ -66,7 +66,7 @@ const Trending = () => {
             {Trendingproducts.length === 0 ? (
                 <NoProductsFound />
             ) : (
-                <ProductGrid products={Trendingproducts} isLoading={loading} onUpvote={handleUpvote} user={user} />
+                <ProductGrid products={Trendingproducts} isLoading={trendingLoading} onUpvote={handleUpvote} user={user} />
             )}
             <div className="mt-8 flex justify-center md:justify-end">
                 <NavLink to="/products">
