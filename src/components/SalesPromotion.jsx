@@ -61,7 +61,7 @@ const SalesPromotion = () => {
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between">
                     <motion.div variants={itemVariants} className="mb-8 md:mb-0 md:mr-8 text-center md:text-left">
                         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
-                            TechBook Summer Blast!
+                            Premium Offer Blast!
                         </h2>
                         <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
                             Get up to 50% off on premium tech products
@@ -104,7 +104,7 @@ const SalesPromotion = () => {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    {["Laptop", "Mobile", "Desktop", "Accessories"].map((item, index) => (
+                    {["Web Development", "AI & Machine Learning", "Mobile App Design", "Data Science"].map((item, index) => (
                         <div key={index} className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex items-center justify-center">
                             <FiStar className="text-yellow-400 mr-2" />
                             <p className="text-gray-900 dark:text-gray-100 font-semibold">{item}</p>

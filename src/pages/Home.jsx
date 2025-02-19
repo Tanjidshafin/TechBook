@@ -8,6 +8,7 @@ import CouponShower from '../components/CouponShower'
 import Recent from '../components/Recent'
 import Newsletter from '../components/NewsLetter'
 import SalesPromotion from '../components/SalesPromotion'
+import TechTrend from '../components/TechTrend'
 
 const Home = () => {
 
@@ -22,6 +23,7 @@ const Home = () => {
             <Featured />
             <SalesPromotion />
             <Trending />
+            <TechTrend />
             <CouponShower />
             <Pricing />
             <Newsletter />
