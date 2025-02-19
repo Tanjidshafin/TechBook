@@ -5,6 +5,9 @@ import { Helmet } from 'react-helmet-async'
 import Trending from '../components/Trending'
 import Pricing from '../components/Pricing'
 import CouponShower from '../components/CouponShower'
+import Recent from '../components/Recent'
+import Newsletter from '../components/NewsLetter'
+import SalesPromotion from '../components/SalesPromotion'
 
 const Home = () => {
 
@@ -15,10 +18,13 @@ const Home = () => {
                 <title>TechBook | Home</title>
             </Helmet>
             <Banner />
+            <Recent />
             <Featured />
+            <SalesPromotion />
             <Trending />
             <CouponShower />
             <Pricing />
+            <Newsletter />
         </div>
     )
 }
