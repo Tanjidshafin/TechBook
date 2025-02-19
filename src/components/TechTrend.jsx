@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { FiBook, FiCalendar, FiUsers, FiArrowRight } from "react-icons/fi"
+import { NavLink } from "react-router"
 
 const TechTrend = () => {
     const [activeBook, setActiveBook] = useState(0)
@@ -99,13 +100,15 @@ const TechTrend = () => {
                         </div>
                     </div>
 
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-6 py-3 rounded-full font-bold text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center"
-                    >
-                        Join Discussion <FiArrowRight className="ml-2" />
-                    </motion.button>
+                    <NavLink to="/discussion">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-6 py-3 rounded-full font-bold text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center"
+                        >
+                            Join Discussion <FiArrowRight className="ml-2" />
+                        </motion.button>
+                    </NavLink>
                 </motion.div>
             </div>
 

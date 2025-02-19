@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FiArrowRight, FiClock, FiStar } from "react-icons/fi"
+import { NavLink } from "react-router"
 
 const SalesPromotion = () => {
     const [timeLeft, setTimeLeft] = useState({
@@ -70,13 +71,15 @@ const SalesPromotion = () => {
                             <FiClock className="mr-2" />
                             <span className="font-semibold">Limited Time Offer</span>
                         </div>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-8 py-3 rounded-full font-bold text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-                        >
-                            Show All Products <FiArrowRight className="inline-block ml-2" />
-                        </motion.button>
+                        <NavLink to="/products">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-8 py-3 rounded-full font-bold text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+                            >
+                                Show All Products <FiArrowRight className="inline-block ml-2" />
+                            </motion.button>
+                        </NavLink>
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="relative">
