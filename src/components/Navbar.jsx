@@ -204,7 +204,8 @@ const Navbar = () => {
 
                                                     <motion.div variants={itemVariants}>
                                                         <NavLink
-                                                            to="/dashboard/statistics"
+                                                            to="/dashboard/my-products
+                                                            "
                                                             className="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors group"
                                                         >
                                                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform">

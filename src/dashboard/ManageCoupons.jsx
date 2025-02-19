@@ -30,12 +30,21 @@ const ManageCoupons = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await AxiosLink.post("/add-coupon", couponData)
-            Swal.fire({
-                title: "Added!",
-                text: "Coupon Added",
-                icon: "success",
-            })
+            if (couponData._id) {
+                await AxiosLink.patch(`/update-coupon/${couponData._id}`, couponData)
+                Swal.fire({
+                    title: "Updated!",
+                    text: "Coupon Updated",
+                    icon: "success",
+                })
+            } else {
+                await AxiosLink.post("/add-coupon", couponData)
+                Swal.fire({
+                    title: "Added!",
+                    text: "Coupon Added",
+                    icon: "success",
+                })
+            }
             couponsRefetched()
             setAddCoupon(false)
             setCouponData({
@@ -48,7 +57,7 @@ const ManageCoupons = () => {
             console.log(error)
             Swal.fire({
                 title: "Error!",
-                text: "There was an issue adding the coupon. Please try again.",
+                text: "There was an issue processing the coupon. Please try again.",
                 icon: "error",
             })
         }
@@ -87,8 +96,8 @@ const ManageCoupons = () => {
 
     const handleEdit = async (id) => {
         try {
-            const coupon = await AxiosLink.get(`/coupon/${id}`)
-            setCouponData(coupon.data)
+            const response = await AxiosLink.get(`/coupon/${id}`)
+            setCouponData(response.data)
             setAddCoupon(true)
         } catch (error) {
             console.log(error)

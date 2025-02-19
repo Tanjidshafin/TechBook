@@ -107,7 +107,7 @@ const PendingProducts = () => {
       label: "View",
       icon: FiEye,
       variant: "default",
-      onClick: (item) => (navigate(`/product/${item.id}`)),
+      onClick: (item) => (navigate(`/product/${item._id}`)),
     },
   ]
 

@@ -207,8 +207,8 @@ const AllProducts = () => {
                         >
                             <option value="newest">Newest</option>
                             <option value="oldest">Oldest</option>
-                            <option value="most_upvotes">Most Upvotes</option>
-                            <option value="least_upvotes">Least Upvotes</option>
+                            <option value="desc">Most Upvotes</option>
+                            <option value="asc">Least Upvotes</option>
                         </select>
 
                         <select

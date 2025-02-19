@@ -153,7 +153,7 @@ function App() {
             <UpdateProduct />
           </motion.div>
         } />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard" element={<Private><Dashboard /></Private>}>
           <Route index path="my-profile" element={
             <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
               <MyProfile />

@@ -21,7 +21,7 @@ const CouponShower = () => {
                 Swipe through our special coupons and save big on your next subscription!
             </p>
 
-            <div className="relative max-w-sm mx-auto overflow-hidden">
+            <div className="relative max-w-sm mx-auto overflow-hidden md:overflow-visible">
                 <Swiper
                     effect={"cards"}
                     grabCursor={true}

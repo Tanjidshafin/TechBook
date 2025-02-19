@@ -45,19 +45,18 @@ const Dashboard = () => {
             })
 
             if (result.isConfirmed) {
+                navigate("/")
                 await signOut(auth)
                 await Swal.fire({
                     title: "You have been logged out!",
                     text: "Please Login Again, Thank You",
                     icon: "success",
                 })
-                navigate("/login")
             }
         } catch (error) {
             console.error(error)
         }
     }
-
     const menuItems = [
         { icon: FiHome, text: "Home", path: "/" },
         { icon: FiBox, text: "My Products", path: "/dashboard/my-products" },
@@ -135,19 +134,21 @@ const Dashboard = () => {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="bg-white dark:bg-gray-800 shadow-sm">
                     <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                        <button
-                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className="lg:hidden text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                        >
-                            <FiMenu className="h-6 w-6" />
-                        </button>
-                        <div className="flex items-center">
-                            <img
-                                src={user.photoURL || "https://via.placeholder.com/40"}
-                                alt="User avatar"
-                                className="h-8 w-8 rounded-full object-cover"
-                            />
-                            <span className="ml-3 font-medium text-gray-700 dark:text-gray-200">{user.displayName}</span>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                className="lg:hidden text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            >
+                                <FiMenu className="h-6 w-6" />
+                            </button>
+                            {user && (<div className="flex items-center">
+                                <img
+                                    src={user?.photoURL || "https://via.placeholder.com/40"}
+                                    alt="User avatar"
+                                    className="h-8 w-8 rounded-full object-cover"
+                                />
+                                <span className="ml-3 font-medium text-gray-700 dark:text-gray-200">{user?.displayName}</span>
+                            </div>)}
                         </div>
                         <div className="flex items-center">
                             <NavLink

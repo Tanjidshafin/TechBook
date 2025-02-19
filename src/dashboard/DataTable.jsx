@@ -122,29 +122,27 @@ const DataTable = ({
                                 {actions && (
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div className="flex items-center justify-end space-x-3">
-                                            {actions.map((action, i) => (
-                                                <button
-                                                    key={i}
-                                                    onClick={() => action.onClick(item)}
-                                                    className={`inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm ${action.variant === 'danger'
-                                                        ? 'text-white bg-red-600 hover:bg-red-700'
-                                                        : action.variant === 'success'
-                                                            ? 'text-white bg-green-600 hover:bg-green-700'
-                                                            : 'text-gray-700 bg-white hover:bg-gray-50 border-gray-300'
-                                                        } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors`}
-                                                >
-                                                    {action.icon && (
-                                                        <action.icon className="-ml-0.5 mr-2 h-4 w-4" />
-                                                    )}
-                                                    {action.label}
-                                                </button>
-                                            ))}
-                                            <button className="text-gray-400 hover:text-gray-500">
-                                                <FiMoreVertical className="h-5 w-5" />
-                                            </button>
+                                            {actions
+                                                .filter((action) => !action.isHidden || !action.isHidden(item)) // Hide button if isHidden returns true
+                                                .map((action, i) => (
+                                                    <button
+                                                        key={i}
+                                                        onClick={() => action.onClick(item)}
+                                                        className={`inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm ${action.variant === 'danger'
+                                                                ? 'text-white bg-red-600 hover:bg-red-700'
+                                                                : action.variant === 'success'
+                                                                    ? 'text-white bg-green-600 hover:bg-green-700'
+                                                                    : 'text-gray-700 bg-white hover:bg-gray-50 border-gray-300'
+                                                            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors`}
+                                                    >
+                                                        {action.icon && <action.icon className="-ml-0.5 mr-2 h-4 w-4" />}
+                                                        {action.label}
+                                                    </button>
+                                                ))}
                                         </div>
                                     </td>
                                 )}
+
                             </motion.tr>
                         ))}
                     </tbody>
