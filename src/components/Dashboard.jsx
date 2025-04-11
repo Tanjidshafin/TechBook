@@ -83,7 +83,7 @@ const Dashboard = () => {
             <aside className="hidden lg:block w-64 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto">
                 <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
                     <div className="p-4">
-                        <h1 className="text-2xl font-bold text-white tracking-wider">TECHBOOK</h1>
+                        <h1 className="text-2xl font-bold text-gray-800 dark:text-white tracking-wider">TECHBOOK</h1>
                     </div>
                 </div>
                 <nav className="mt-5 px-2">

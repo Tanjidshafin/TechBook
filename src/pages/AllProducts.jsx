@@ -270,7 +270,7 @@ const AllProducts = () => {
                                         className="w-full h-48 object-contain"
                                     />
                                     <div className="p-4">
-                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                        <h3 className="text-xl font-semibold h-[3.5rem] text-gray-900 dark:text-white mb-2">
                                             <NavLink to={`/product/${product._id}`} className="hover:text-blue-600 dark:hover:text-blue-400">
                                                 {product.name}
                                             </NavLink>

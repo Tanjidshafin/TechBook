@@ -64,15 +64,16 @@ const Error404 = () => {
                         className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4"
                         variants={itemVariants}
                     >
-                        <motion.a
-                            href="/"
-                            className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <FiHome className="mr-2" />
-                            Back to Home
-                        </motion.a>
+                        <NavLink to="/">
+                            <motion.a
+                                className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <FiHome className="mr-2" />
+                                Back to Home
+                            </motion.a>
+                        </NavLink>
                         <NavLink to="/products">
                             <motion.a
                                 href="/search"
