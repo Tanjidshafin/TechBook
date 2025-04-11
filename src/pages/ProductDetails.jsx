@@ -149,6 +149,7 @@ export default function ProductDetails() {
                 image: product.mainImage,
                 email: user.email,
                 speciality: product.speciality,
+                reportedDate: new Date().toLocaleDateString()
             }
             const res = await AxiosLink.post("/add-reported-products", reportedData)
             Swal.fire({
