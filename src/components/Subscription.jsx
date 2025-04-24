@@ -9,44 +9,6 @@ import { AppContext } from "../context/AppContext";
 import UseCoupons from "../hooks/UseCoupons";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-
-const SuccessConfetti = () => {
-    return (
-        <motion.div
-            className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-        >
-            {[...Array(50)].map((_, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute w-3 h-3 rounded-full"
-                    initial={{
-                        top: "50%",
-                        left: "50%",
-                        scale: 0,
-                        backgroundColor: ["#14b8a6", "#0d9488", "#0f766e", "#115e59", "#134e4a"][Math.floor(Math.random() * 5)]
-                    }}
-                    animate={{
-                        top: `${Math.random() * 100}%`,
-                        left: `${Math.random() * 100}%`,
-                        scale: [0, 1, 0.5],
-                        y: [0, -100 - Math.random() * 500],
-                        x: [0, (Math.random() - 0.5) * 500],
-                        rotate: Math.random() * 360,
-                    }}
-                    transition={{
-                        duration: 2 + Math.random() * 3,
-                        ease: "easeOut",
-                        delay: Math.random() * 0.5,
-                    }}
-                />
-            ))}
-        </motion.div>
-    );
-};
-
 const SuccessMessage = () => {
     return (
         <motion.div
@@ -179,7 +141,6 @@ const CheckoutForm = () => {
     return (
         <>
             <AnimatePresence>
-                {success && <SuccessConfetti />}
                 {success && <SuccessMessage />}
             </AnimatePresence>
 
