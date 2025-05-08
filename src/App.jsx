@@ -65,139 +65,140 @@ function App() {
 
   return (
     <div className='max-w-screen-2xl mx-auto'>
-
       {location.pathname.startsWith("/dashboard") ? "" : (<Navbar />)}
-      <Routes>
-        <Route path="/" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-          <Home />
-        </motion.div>
-        } />
-        <Route path="/login" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-          <Login />
-        </motion.div>
-        } />
-        <Route path="/signup" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-          <Signup />
-        </motion.div>
-        } />
-        <Route path="/product/:id" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-          <Private>
-            <ProductDetails />
-          </Private>
-        </motion.div>
-        } />
-        <Route path="/products" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-
-          <AllProducts />
-
-        </motion.div>
-        } />
-        <Route path="*" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-
-          <Error404 />
-
-        </motion.div>
-        } />
-        <Route path="/subscription" element={<motion.div
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.5 }}
-        >
-
-          <Private>
-            <Subscription />
-          </Private>
-
-        </motion.div>
-        } />
-        <Route path="/updateUser/:id" element={
-          <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-            <UpdateProduct />
+      <div className='pt-20'>
+        <Routes>
+          <Route path="/" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            <Home />
           </motion.div>
-        } />
-        <Route path="/dashboard" element={<Private><Dashboard /></Private>}>
-          <Route index path="my-profile" element={
+          } />
+          <Route path="/login" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            <Login />
+          </motion.div>
+          } />
+          <Route path="/signup" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            <Signup />
+          </motion.div>
+          } />
+          <Route path="/product/:id" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            <Private>
+              <ProductDetails />
+            </Private>
+          </motion.div>
+          } />
+          <Route path="/products" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+
+            <AllProducts />
+
+          </motion.div>
+          } />
+          <Route path="*" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+
+            <Error404 />
+
+          </motion.div>
+          } />
+          <Route path="/subscription" element={<motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+
+            <Private>
+              <Subscription />
+            </Private>
+
+          </motion.div>
+          } />
+          <Route path="/updateUser/:id" element={
             <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <MyProfile />
+              <UpdateProduct />
             </motion.div>
           } />
-          <Route path="add-product" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <AddProduct />
-            </motion.div>
-          } />
-          <Route path="my-products" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <MyProducts />
-            </motion.div>
-          } />
-          <Route path="reported-products" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <ReportedProducts />
-            </motion.div>
-          } />
-          <Route path="pending-products" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <PendingProducts />
-            </motion.div>
-          } />
-          <Route path="statistics" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <Statistics />
-            </motion.div>
-          } />
-          <Route path="manage-users" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <ManageUsers />
-            </motion.div>
-          } />
-          <Route path="manage-coupons" element={
-            <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
-              <ManageCoupons />
-            </motion.div>
-          } />
-        </Route>
+          <Route path="/dashboard" element={<Private><Dashboard /></Private>}>
+            <Route index path="my-profile" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <MyProfile />
+              </motion.div>
+            } />
+            <Route path="add-product" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <AddProduct />
+              </motion.div>
+            } />
+            <Route path="my-products" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <MyProducts />
+              </motion.div>
+            } />
+            <Route path="reported-products" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <ReportedProducts />
+              </motion.div>
+            } />
+            <Route path="pending-products" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <PendingProducts />
+              </motion.div>
+            } />
+            <Route path="statistics" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <Statistics />
+              </motion.div>
+            } />
+            <Route path="manage-users" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <ManageUsers />
+              </motion.div>
+            } />
+            <Route path="manage-coupons" element={
+              <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.5 }}>
+                <ManageCoupons />
+              </motion.div>
+            } />
+          </Route>
 
 
-      </Routes>
+        </Routes>
+      </div>
 
       {location.pathname.startsWith("/dashboard") ? "" : (<Footer />)}
       <div className="fixed bottom-4 right-4">
