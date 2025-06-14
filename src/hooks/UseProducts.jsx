@@ -10,7 +10,6 @@ const UseProducts = () => {
             const res = await AxiosLink.get("/products")
             return res.data
         }
-
     })
     return [products, productRefetched, isFetching]
 }
